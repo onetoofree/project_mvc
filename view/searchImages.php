@@ -1,9 +1,10 @@
 <?php
 
 
-require '../pages/include/searchFunctions.php';
-require '../dbconnection/db_connect.php';
-require 'include/metadataDropDownListQueries.php';
+    require '../model/searchQueries.php';
+    require '../controller/searchFunctions.php';
+    require '../model/db_connect.php';
+    require '../model/metadataDropDownListQueries.php';
 //session_start();
 
 ob_start();
@@ -17,7 +18,7 @@ $myArray = performSearch();
 <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <title>Next Map</title>
+    <title>Images</title>
     <link rel = "stylesheet" type = "text/css" href = "lightbox.min.css">
     <script type = "text/javascript" src="lightbox-plus-jquery.min.js"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js" charset="utf-8"></script>
@@ -260,10 +261,11 @@ $myArray = performSearch();
             markers(map);
             
          var coords = <?php echo json_encode($myArray); ?>;
-        
+         //console.log(coords);
 
         function markers(map)
         {
+            //have a look at this - need to do this way?
             $.getJSON('coords.json', function(data)
                 
 				{
