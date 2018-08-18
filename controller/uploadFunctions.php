@@ -196,12 +196,14 @@ function uploadTheSelectedImage()
   // '$resolution')";
   $dbc->query($insertSelectedImageToDatabaseQuery);
   //header("location: onePageUpload.php");
-  header("location: successfulUpload.php");
+  header("location: tagImages.php");
 }
 
 function getVisionTags($selectedFile)
 {
-  $resultingTags = exec("python /Library/WebServer/Documents/project/pages/visionex/imageRecognition.py $selectedFile");
+  //$resultingTags = exec("python /Library/WebServer/Documents/project/pages/visionex/imageRecognition.py $selectedFile");
+  $resultingTags = exec("python /Library/WebServer/Documents/historicPhotos/controller/imageRecognition/imageRecognition.py $selectedFile");
+  // /Library/WebServer/Documents/historicPhotos/controller/imageRecognition/imageRecognition.py
   return $resultingTags;
 }
 
@@ -392,8 +394,10 @@ function displayTags($fDestination)
 
 function addTagsToImages()
 {
-  require '../dbconnection/db_connect.php';
-  require 'include/uploadQueries.php';
+  // require '../dbconnection/db_connect.php';
+  // require 'include/uploadQueries.php';
+  require '../model/db_connect.php';
+  require '../model/uploadQueries.php';
   
   $tagsToBeAdded = $_SESSION['listOfTags'];
   $fileName = $_SESSION['filename'];
