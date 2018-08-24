@@ -43,14 +43,55 @@ function getTheSelectedImage($data)
     $_SESSION['thumbDestination'] = $thumbDestination;
 }
 
+// function displaySelectedImage()
+// {
+//   echo "<div class='selectedImage'>";  
+//   echo "<table>";
+//   echo "<h1>selected image</h1>
+//   <tr>
+//   <td><img src={$_SESSION['thumbDestination']}></td>";
+//   echo "</table>";
+//   echo "</div>";
+// }
+
 function displaySelectedImage()
 {
-  echo "<div class='selectedImage'>";  
-  echo "<table>";
-  echo "<h1>selected image</h1>
-  <tr>
-  <td><img src={$_SESSION['thumbDestination']}></td>";
-  echo "</table>";
+  // echo "<div class='selectedImage'>";  
+  echo "<div class='uploadMap'>";
+  // echo "<table>";
+  echo "<img src={$_SESSION['thumbDestination']} class='uploadMap'>";
+  // echo "</table>";
+  echo "</div>";
+}
+
+function tagImage()
+{
+  echo "<div class='uploadMap'>";  
+  echo "<h1>Selected Image</h1>";
+  echo "<img src={$_SESSION['thumbDestination']} class='selectedImage'>";
+  echo "<form action='onePageUpload.php' method='post'>";    
+  echo "<input type='text' placeholder = 'Enter year value here *' id='year' name='year'><br>";
+  echo '<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+    <div id="map" class="uploadMap"></div>
+    <div id="result" class="selectedImage"></div>';
+  echo '<script src="../pages/js/uploadMap.js"></script>';
+  echo "<button type='submit' class='button button-block' name='uploadImage' />Upload Image and Details</button>";
+  echo "</div>";
+}
+
+function displayUploadImage()
+{
+  echo "<div class='uploadMap'>";  
+  echo "<h1>Selected Image</h1>";
+  echo "<img src={$_SESSION['thumbDestination']} class='selectedImage'>";
+  echo "<form action='uploadImages.php' method='post'>";    
+  echo "<input type='text' placeholder = 'Enter year value here *'' id='year' name='year'><br>";
+  echo '<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+    <div id="map" class="uploadMap"></div>
+    <div id="result" class="selectedImage"></div>';
+  echo '<script src="../view/js/uploadMap.js"></script>';
+  echo "<button type='submit' class='button button-block' name='uploadImage' />Upload Image and Details</button>";
+  // <button class="button button-block" name="login" />Log In</button>
   echo "</div>";
 }
 
@@ -325,13 +366,24 @@ function displayTags($fDestination)
     
     $selection = [];
     
-    $checked = $_POST['options'];
-    echo "<div class='tagSelector'>";
+    // $checked = $_POST['options'];
+    // echo "<div class='tagSelector'>";
   
+    // echo "<form id='tagSelection' method='post'>"; 
+    // echo "<table cellspacing='3'>";   
+    // echo "<tr id='heading'>";          
+    // echo "<td>The below tags have been selected for your image</td>";            
+    // echo "</tr>";
+
+    $checked = $_POST['options'];
+    // echo "<div class='uploadMap'>";  
+    echo "<div class='tagSelector'>";
+    echo "<h2>Select tags from the below suggestions</h2>";
     echo "<form id='tagSelection' method='post'>"; 
-    echo "<table cellspacing='3'>";   
+    echo "<table cellspacing='3'>";
+    echo "<tbody>"; 
     echo "<tr id='heading'>";          
-    echo "<td>The below tags have been selected for your image</td>";            
+    // echo "<td>The below tags have been suggested for your image</td>";            
     echo "</tr>";
 
     $eachTag = explode(',', $tags);
@@ -340,19 +392,36 @@ function displayTags($fDestination)
         echo "<tr>";          
         echo "<td>$suggestedTag</td>";            
         echo "<td>";            
-        echo "<input type='checkbox' name='options[]' value=$suggestedTag/>";              
+        echo "<input type='checkbox' id='$suggestedTag' name='options[]' value=$suggestedTag/>";           
         echo "</td>";            
         echo "</tr>";   
     }
+    // echo "<tr>";
+    // echo "<td></td>";
+    // echo "<td>";
+    // echo "<input type='text' name='options[]' id='manuallyEnteredTags'/>";
+    // echo "<button type='submit' name='addTags' />Add Tags to Images</button>";
+    // // echo "<input type='submit' name='addTags' value='Go!' />";
+    // echo "</td>";
+    // echo "<tr>";
+    // echo "</table>";  
+    // echo "</div>";
+
     echo "<tr>";
-    echo "<td></td>";
     echo "<td>";
-    echo "<input type='text' name='options[]' id='manuallyEnteredTags'/>";
-    echo "<button type='submit' name='addTags' />Add Tags to Images</button>";
-    // echo "<input type='submit' name='addTags' value='Go!' />";
+    echo "<input type='text' placeholder = '...or enter a custom tag here' name='options[]' id='manuallyEnteredTags'/>";
     echo "</td>";
+    echo "</tr>";
+    // echo "<input type='submit' name='addTags' value='Go!' />";
     echo "<tr>";
-    echo "</table>";  
+    echo "<td>";
+    echo "<button type='submit' class='button button-block' name='addTags' />Click Here to Add Tags to Images</button>";
+    echo "</td>";
+    
+    echo "</tr>";
+    echo "</tbody>";
+    echo "</table>"; 
+    echo "</form>"; 
     echo "</div>";
 
     for($i=0; $i < count($checked); $i++)

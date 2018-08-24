@@ -1,5 +1,5 @@
 <?php 
-require '../model/db_connect.php';
+//require '../model/db_connect.php';
 require '../controller/uploadFunctions.php';
 session_start();
 
@@ -18,8 +18,7 @@ if(isset($_POST['submit']))
 {  
   getTheSelectedImage($_FILES);   
 }
-echo "<br>";
-echo "this filename is available: $fileName";
+
 $fName = $_SESSION['filename'];
 $fDestination = $_SESSION['fileDestination'];
 $tDestination = $_SESSION['thumbDestination'];
@@ -27,12 +26,6 @@ $fTmpName = $_SESSION['fileTempName'];
 $username = $_SESSION['username'];
 $tags = $_SESSION['tags'];
 $myTags = $_SESSION['selectedTags'];
-echo "<br>";
-echo "this fName is available: $fName";
-echo "<br>";
-echo "this username is available: $username";
-echo "<br>";
-echo "these tags were selected: $myTags";
 ?>
 
 <!DOCTYPE html>
@@ -42,7 +35,8 @@ echo "these tags were selected: $myTags";
     <meta charset="utf-8">
     <title>Image Upload</title>
     <script src="http://code.jquery.com/jquery-latest.min.js" charset="utf-8"></script>
-    <style>
+    <?php include 'css/css.html'; ?>
+    <!-- <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
@@ -126,25 +120,36 @@ echo "these tags were selected: $myTags";
       #target {
         width: 345px;
       }
-    </style>
+    </style> -->
 </head>
 
 <body>
+<div class="form">
+<div id="upload"> 
 <h1>Upload Images Here</h1>
-<form action="uploadImages.php" method="POST" enctype="multipart/form-data">
-Select Image: <input type="file" name="file"><br>
-<button type="submit" name="submit" />Get Image</button>
+<form method="POST" enctype="multipart/form-data">
+<input type="file" name="file"><br>
+<button class="button button-block" type="submit" name="submit" />Get Image</button>
 </form>
+</div>
+</div>
 
 <?php
 if(isset($_FILES['file']))
 {
-    displaySelectedImage();
-    displayYearField();
-    displayUploadMapWithSearchBox();
-    displayUploadButton();
+  displayUploadImage();
+  // displayYearField();
+  //displayUploadMapWithSearchBox();
+  //displayUploadButton();
+  
+  readExifFromUploadedImages($fDestination);
+  
+    // displaySelectedImage();
+    // displayYearField();
+    // displayUploadMapWithSearchBox();
+    // displayUploadButton();
     
-    readExifFromUploadedImages($fDestination);
+    // readExifFromUploadedImages($fDestination);
     
 }
 ?>

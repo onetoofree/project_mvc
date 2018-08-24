@@ -1,5 +1,5 @@
 <?php 
-require '../dbconnection/db_connect.php';
+require '../model/db_connect.php';
 session_start();
 
 ob_start();
