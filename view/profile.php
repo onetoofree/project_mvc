@@ -59,8 +59,8 @@ else {
           <p><?= $email ?></p>
           
           <!-- <a href="upload.php"><button class="button button-block" name="upload"/>Upload</button></a> -->
-          <a href="onePageUpload.php"><button class="button button-block" name="upload"/>Upload</button></a>
-          <a href="plotMarkersMetaData.php"><button class="button button-block" name="search"/>Search</button></a>
+          <a href="uploadImages.php"><button class="button button-block" name="upload"/>Upload</button></a>
+          <a href="searchImages.php"><button class="button button-block" name="search"/>Search</button></a>
           <a href="logout.php"><button class="button button-block" name="logout"/>Log Out</button></a>
 
     </div>
