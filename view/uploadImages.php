@@ -18,13 +18,13 @@ putenv('GOOGLE_APPLICATION_CREDENTIALS=/Library/WebServer/Documents/project/apiK
 
 <body>
 <div class="form">
-<div id="upload"> 
-<h1>Upload Images Here</h1>
-<form method="POST" enctype="multipart/form-data">
-<input type="file" name="file"><br>
-<button class="button button-block" type="submit" name="submit" />Get Image</button>
-</form>
-</div>
+  <div id="upload"> 
+    <h1>Upload Images Here</h1>
+    <form method="POST" enctype="multipart/form-data">
+      <input type="file" name="file"><br>
+      <button class="button button-block" type="submit" name="submit" />Get Image</button>
+    </form>
+  </div>
 </div>
 
 

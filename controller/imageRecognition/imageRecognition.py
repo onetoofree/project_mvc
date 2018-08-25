@@ -10,13 +10,6 @@ def getImageTags(selectedFile):
     client = vision.ImageAnnotatorClient()
     tags = []
 
-    # file_name = os.path.join(
-    #     os.path.dirname(__file__),
-    #     'plane.jpg')
-
-    # file_name = '../uploads/35884126_10155589297920936_1352616318272012288_n.jpg'
-    # file_name = selectedFile
-
     with io.open(selectedFile, 'rb') as image_file:
         content = image_file.read()
 
