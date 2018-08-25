@@ -22,122 +22,11 @@ $myArray = performSearch();
     <link rel = "stylesheet" type = "text/css" href = "lightbox.min.css">
     <script type = "text/javascript" src="lightbox-plus-jquery.min.js"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js" charset="utf-8"></script>
-    <!-- <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        /* height: 100%; */
-        width: 1000px;
-        height: 600px;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #description {
-        font-family: Roboto;
-        font-size: 15px;
-        font-weight: 300;
-      }
-
-      #infowindow-content .title {
-        font-weight: bold;
-      }
-
-      #infowindow-content {
-        display: none;
-      }
-
-      #map #infowindow-content {
-        display: inline;
-      }
-
-      .pac-card {
-        margin: 10px 10px 0 0;
-        border-radius: 2px 0 0 2px;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        outline: none;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-        background-color: #fff;
-        font-family: Roboto;
-      }
-
-      #pac-container {
-        padding-bottom: 12px;
-        margin-right: 12px;
-      }
-
-      .pac-controls {
-        display: inline-block;
-        padding: 5px 11px;
-      }
-
-      .pac-controls label {
-        font-family: Roboto;
-        font-size: 13px;
-        font-weight: 300;
-      }
-
-      #pac-input {
-        background-color: #fff;
-        font-family: Roboto;
-        font-size: 15px;
-        font-weight: 300;
-        margin-left: 12px;
-        padding: 0 11px 0 13px;
-        text-overflow: ellipsis;
-        width: 400px;
-      }
-
-      #pac-input:focus {
-        border-color: #4d90fe;
-      }
-
-      #title {
-        color: #fff;
-        background-color: #4d90fe;
-        font-size: 25px;
-        font-weight: 500;
-        padding: 6px 12px;
-      }
-      #target {
-        width: 345px;
-      }
-
-      body
-        {
-            font-family: sans-serif;
-        }
-        h1 
-        {
-            text-align: center;
-            color: forestgreen;
-            margin: 30px 0 50px
-        }
-        .imageGallery
-        {
-            margin: 10px 50px;
-        }
-        .imageGallery img
-        {
-            width: 230px;
-            padding: 5px;
-            /* filter: grayscale(100%); */
-            transition: 0.5s;
-        }
-        .imageGallery img:hover
-        {
-            /* filter: grayscale(0); */
-            transform: scale(1.1);
-        }
-    </style> -->
     <?php include 'css/css.html'; ?>
   </head>
+  
   <body>
-  <div class="uploadMap">
+    <div class="uploadMap">
   <h1>Image Search</h1>
     <input id="pac-input" class="controls" name ="locationSearch" type="text" placeholder="Search Box">
     <div id="map"></div>
@@ -154,15 +43,11 @@ $myArray = performSearch();
         
       function initAutocomplete() {
           var myLatlng = {lat: 51.5219, lng: -0.1302};
-        //   var opt = { minZoom: 6, maxZoom: 9 };
           infowindow = new google.maps.InfoWindow();
           var map = new google.maps.Map(document.getElementById('map'), {
-          //center: {lat: 51.5074, lng: 0.1278}
           center: myLatlng,
           zoom: 13,
-          //maxZoom: 15,
           minZoom: 2,
-        //   zoom: minZoomLevel,
           mapTypeId: 'roadmap',
             
         });
@@ -184,7 +69,6 @@ $myArray = performSearch();
         searchBox.addListener("places_changed", function() {
           var places = searchBox.getPlaces();
           var myLatlng = places;
-          //console.log(places);
           <?php ?>
           
 
@@ -201,7 +85,6 @@ $myArray = performSearch();
           var bounds = new google.maps.LatLngBounds();
           var boundsCenter = bounds.getCenter().lat;
           var mapCenter = map.getCenter();
-        //   console.log(boundsCenter);
           console.log("bounds centre 1" + bounds.getCenter());
           console.log("bounds centre 1" + mapCenter);
           console.log(places[0].geometry);
@@ -245,7 +128,7 @@ $myArray = performSearch();
             document.getElementById('locLatCoords').value=latitude;
             document.getElementById('locLngCoords').value=longitude;
             
-            //locationPlaceCoords.push("" + place.geometry.location);
+            
             if (place.geometry.viewport) {
               // Only geocodes have viewport.
               bounds.union(place.geometry.viewport);
@@ -256,14 +139,12 @@ $myArray = performSearch();
           map.fitBounds(bounds);
         });
         
-        console.log("oyyy");
-        //locationPlaceCoords.push("locationCoordssss" + place.geometry.location);
+        
         console.log(locationPlaceCoords);
 
             markers(map);
             
          var coords = <?php echo json_encode($myArray); ?>;
-         //console.log(coords);
 
         function markers(map)
         {
@@ -277,11 +158,7 @@ $myArray = performSearch();
                         var popupImage = '<br><img src="'+image+'" style="width:500px;">';
                         var points = new google.maps.LatLng(coords[i].latitude, coords[i].longitude);
                         var marker = new google.maps.Marker({map: map, position: points, clickable: true});
-                        // var info = new google.maps.InfoWindow({content: popupImage});
-                        //var info = null;
-                        //console.log(popupImage);
-
-                        //console.log("image path is: " + image);
+                        
                         
                         google.maps.event.addListener(marker, 'click', (function(marker, popupImage, infowindow){
                             return function() {
@@ -296,9 +173,7 @@ $myArray = performSearch();
                     }                    
                 });
                 var mydata = locationPlaceCoords;   
-                console.log("mydataaaa");
-                console.log(mydata);      
-                //geocoder = new google.maps.Geocoder();             
+                          
         }
 
         
@@ -308,10 +183,7 @@ $myArray = performSearch();
     
     <div class="yearEntry">
         <table>
-
-        <!-- <h4>Search by year</h4> -->
         <tr>
-        <!-- <td><form action='plotMarkers.php' method='post'></td> -->
         <form method='post'>       
         <input type='hidden' id='locLatCoords' name='locLatCoords' value="">
         <input type='hidden' id='locLngCoords' name='locLngCoords' value="">
@@ -324,13 +196,7 @@ $myArray = performSearch();
         <td class='search-text'>
         End Year: <input type='text' placeholder = 'Enter end year value' id='yearSearchEnd' name='yearSearchEnd'>
         </td>
-        <!-- <input type='hidden' name='locLatCoords' value='51.5083466'>
-        <input type='hidden' name='locLngCoords' value='-0.10841579999998885'> -->
-        <!-- <input type='hidden' id='locLatCoords' name='locLatCoords' value="">
-        <input type='hidden' id='locLngCoords' name='locLngCoords' value="">
-        <td>
-        Search Radius: <input type='text' id='searchRadius' name='searchRadius' value='3000'>
-        </td> -->
+        
         </tr>
         <tr>
         <!-- Enter tag values separated by commas: -->
@@ -481,16 +347,7 @@ $myArray = performSearch();
     
 
     
-    <!-- <textarea rows="4" cols="50">
-    </textarea> -->
-
-    <!-- <div class="tagSearch">
-        <table>
-        <tr>
-        <td><form action='plotMarkers.php' method='post'></td>        
-        Enter tag values separated by commas: <input type='text' id='tagSearch' name='tagSearch'><br>
-        </table>
-    </div>   -->
+    
     </div>   
  
     
@@ -500,25 +357,12 @@ $myArray = performSearch();
 if(isset($_POST['mapSearch']))
 {    
     
-    // $startYear = $_POST['yearSearchStart'];
-    // $endYear = $_POST['yearSearchEnd'];
-    // echo "the search value is from $startYear to $endYear";
+   
     
     echo "<br>";
 
-    echo "<h1>Image Gallery</h1>";
-    //$coords = json_encode($myArray);
-    //echo $coords;
-    //echo "yo";
-    //echo "<br>";
-    // echo "tags: ".$tags;
-    // echo "<br>";
-    // echo "tagList: ".$tagList;
-    // //$finalList = implode(',', (array)$tagList);
-    // echo "<br>";
-    // echo "finalList: ".$finalList;
-    // echo "<br>";
-    // // print_r($finalList);
+    echo "<h2>Image Gallery</h2>";
+    
     echo 
     '
     <div class = "imageGallery">
