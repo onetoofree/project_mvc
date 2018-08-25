@@ -9,7 +9,7 @@
 
 ob_start();
 
-$myArray = performSearch();
+$searchResults = performSearch();
 
 ?>
 
@@ -37,8 +37,6 @@ $myArray = performSearch();
 
         
         var infowindow;
-        var latitude = "51.5074";
-        var longitude = "0.1278";
         var locationPlaceCoords = [];
         
       function initAutocomplete() {
@@ -85,9 +83,7 @@ $myArray = performSearch();
           var bounds = new google.maps.LatLngBounds();
           var boundsCenter = bounds.getCenter().lat;
           var mapCenter = map.getCenter();
-          console.log("bounds centre 1" + bounds.getCenter());
-          console.log("bounds centre 1" + mapCenter);
-          console.log(places[0].geometry);
+        
           places.forEach(function(place) {
             if (!place.geometry) {
               console.log("Returned place contains no geometry");
@@ -95,10 +91,7 @@ $myArray = performSearch();
             }
             var placeCoords = place.geometry.location;
             locationPlaceCoords.push(place.geometry.location);
-            console.log("yo yo!");
-            console.log(locationPlaceCoords[0]);
-            console.log("yo");
-            console.log(placeCoords);
+            
             var icon = {
               url: place.icon,
               size: new google.maps.Size(71, 71),
@@ -117,14 +110,13 @@ $myArray = performSearch();
             
         
         );
-        console.log('yae');
-            console.log(locationMarkers[0].position.lat());
-            console.log(locationMarkers[0].position.lng());
+            //when a location value is entered into the search box,
+            //and google maps sets a locationMarker
+            //get the long and lat values of that locationMarker 
             latitude = locationMarkers[0].position.lat();
             longitude = locationMarkers[0].position.lng();
-            console.log('yae yae');
-            console.log(latitude);
-            console.log(longitude);
+            
+            //set the value of the hidden input fields to the search location 
             document.getElementById('locLatCoords').value=latitude;
             document.getElementById('locLngCoords').value=longitude;
             
@@ -144,39 +136,30 @@ $myArray = performSearch();
 
             markers(map);
             
-         var coords = <?php echo json_encode($myArray); ?>;
+         var coords = <?php echo json_encode($searchResults); ?>;
 
         function markers(map)
         {
             //have a look at this - need to do this way?
-            $.getJSON('coords.json', function(data)
-                
+            $.getJSON('coords.json', function(data)                
 				{
                     for(i in coords)
                     {
                         var image = coords[i].imagepath;
                         var popupImage = '<br><img src="'+image+'" style="width:500px;">';
                         var points = new google.maps.LatLng(coords[i].latitude, coords[i].longitude);
-                        var marker = new google.maps.Marker({map: map, position: points, clickable: true});
-                        
+                        var marker = new google.maps.Marker({map: map, position: points, clickable: true});                        
                         
                         google.maps.event.addListener(marker, 'click', (function(marker, popupImage, infowindow){
                             return function() {
                                 infowindow.setContent(popupImage);
                                 infowindow.open(map, marker);
-                                console.log(infowindow);
+                                // console.log(infowindow);
                             }
                         })(marker, popupImage, infowindow));
-                        
-                        
-                        
                     }                    
-                });
-                var mydata = locationPlaceCoords;   
-                          
+                });       
         }
-
-        
     }
     
     </script>
@@ -195,13 +178,9 @@ $myArray = performSearch();
         </td>
         <td class='search-text'>
         End Year: <input type='text' placeholder = 'Enter end year value' id='yearSearchEnd' name='yearSearchEnd'>
-        </td>
+        </td>        
+        </tr>
         
-        </tr>
-        <tr>
-        <!-- Enter tag values separated by commas: -->
-        <br>
-        </tr>
         <tr>
             <td class='search-text'>
         Enter tag values separated by commas: <textarea rows="4" cols="50" placeholder = 'Enter comma separated tags' id="tagSearch" name="tagSearch"></textarea>
@@ -333,32 +312,20 @@ $myArray = performSearch();
             echo "<td></td>";
             echo "</tr>";
         echo "</div>";
-
-           
         ?>
-        
         
         <tr>
         <td><button type='submit' class='button button-block' name='mapSearch' />Search for Images</button></td>
-
         </tr>
         </table>
     </div>
-    
-
-    
-    
     </div>   
  
     
 
-    <?php
-
+<?php
 if(isset($_POST['mapSearch']))
-{    
-    
-   
-    
+{   
     echo "<br>";
 
     echo "<h2>Image Gallery</h2>";
@@ -368,18 +335,15 @@ if(isset($_POST['mapSearch']))
     <div class = "imageGallery">
     </div>
     ';
-
-    
 }
-
 ?>
     
     <script>
 
     //there's a 403 error in here somewhere...try to sort.  
-    //maybe the qurey needs to restrict where there is no thumbnail
+    //maybe the query needs to restrict where there is no thumbnail
 
-    var coords = <?php echo json_encode($myArray); ?>;
+    var coords = <?php echo json_encode($searchResults); ?>;
     var fullGallery = '';
     for (i in coords)
     {

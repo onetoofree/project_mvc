@@ -25,8 +25,6 @@ $iso = $_POST['iso'];
 
 $resolution = $_POST['resolution'];
 
-//$finalList = $_SESSION['finalList'];
-//change this into a function?
 $tagArray = [];
     $eachTag = explode(',', $tags);
     foreach($eachTag as $searchTag)
