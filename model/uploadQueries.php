@@ -1,6 +1,6 @@
 <?php
 
-
+//get session values for inserting image details into database
 $fileName = $_SESSION['filename'];
 $fileDestination = '../uploads/'.$_SESSION['filename'];
 $thumbDestination = '../uploads/thumbnails/'.$_SESSION['filename'];
@@ -9,7 +9,7 @@ $longi = $_SESSION['long'];
 $year = $_POST['year'];
 $lat = $_POST['postlat'];
 $long = $_POST['postlng'];
-$_SESSION['yearValue'] = $year;
+// $_SESSION['yearValue'] = $year;
 $username = $_SESSION['username'];
 $make = $_SESSION['Make'];
 $model = $_SESSION['Model'];
@@ -19,6 +19,7 @@ $iso = $_SESSION['ISOSpeedRatings'];
 $resolution = $_SESSION['XResolution'];
 $tagValue = $_SESSION['tagValue'];
 
+//statement to insert image details into database
 $insertSelectedImageToDatabaseQuery = 
 "INSERT INTO images 
   (imagename, 
@@ -49,22 +50,12 @@ $insertSelectedImageToDatabaseQuery =
   '$iso',
   '$resolution')";
 
+
+//get imageId query for inserting tags into the database
 $getImageIdQuery = 
 "SELECT imageid
     FROM project.images
     WHERE imagename = '$fileName'
     ORDER BY imageid desc
     LIMIT 1";
-?>
-
-<?php
-
-
-$insertTagsIntoDatabaseQuery = 
-"INSERT INTO tags 
-    (tag, imageId) 
-    VALUES 
-    ('$tagValue', '$imageId')";
-
-
 ?>
