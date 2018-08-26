@@ -50,8 +50,7 @@ function getTheSelectedImage($data)
 }
 
 function validateSelectedFile()
-{
-  $passedValidation = false;
+{ 
   echo "$passedValidation";
   echo "<br>";
   header('Content-Type: text/html; charset=utf-8');
@@ -72,22 +71,24 @@ try {
         case UPLOAD_ERR_OK:
             break;
         case UPLOAD_ERR_NO_FILE:
-            throw new RuntimeException('No file sent.');
-            $passedValidation = false;
+            die('Please select a file before clicking the "Get Image" button');
+            // throw new RuntimeException('No file sent.');
         case UPLOAD_ERR_INI_SIZE:
         case UPLOAD_ERR_FORM_SIZE:
-            throw new RuntimeException('Exceeded filesize limit.');
-            $passedValidation = false;
+            die('The file you have selected is too large.  The maximum size is 1MB.');
+            // throw new RuntimeException('The file you have selected is too large.  The maximum size is 1MB.');
         default:
             throw new RuntimeException('Unknown errors.');
-            $passedValidation = false;
     }
 
     // You should also check filesize here. 
     if ($_FILES['file']['size'] > 1000000) {
-        $passedValidation = false;
-        throw new RuntimeException('Exceeded filesize limit.');
-        
+        die('The file you have selected is too large.  The maximum size is 1MB.');
+        //throw new RuntimeException('Exceeded filesize limit.');        
+    }
+    elseif($_FILES['file']['size'] < 40000)
+    {
+      die('The file you have selected is too small.  The minimum size is 40KB.');
     }
 
     // DO NOT TRUST $_FILES['file']['mime'] VALUE !!
@@ -102,8 +103,9 @@ try {
         ),
         true
     )) {
-        throw new RuntimeException('Invalid file format.');
-        $passedValidation = false;
+        die('The file you have selected is of an invalid format.  Please select files of type jpg/jpeg, png or gif only.');
+        //throw new RuntimeException('Invalid file format.');
+        
     }
 
     // You should name it uniquely.
@@ -124,16 +126,13 @@ try {
     //     throw new RuntimeException('Failed to move uploaded file.');
     // }
 
-    echo 'File is uploaded successfully.';
+    // echo 'File is uploaded successfully.';
 
 } catch (RuntimeException $e) {
 
     echo $e->getMessage();
 
 }
-echo "<br>";
-echo $passedValidation;
-return $passedValidation;
 }
 
 function displaySelectedImage()
