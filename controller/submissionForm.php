@@ -17,7 +17,6 @@ ob_start();
 
 
 <body>
-<!-- <h1>Submission Form</h1> -->
 
 
 
@@ -32,6 +31,8 @@ $_SESSION['lat'] = $latitude;
 
 echo "<br>";
 echo "the longitutde isss: $longitude";
+echo "<br>";
+echo "the longitutde also isss:".$_SESSION['long'];
 echo "<br>";
 echo "the latitude isss: $latitude";
 echo "<br>";

@@ -19,6 +19,7 @@ function createThumbnail($fileName)
 
 function getTheSelectedImage($data)
 {
+    session_unset($_SESSION['long']);
     validateSelectedFile(); 
 
     $file = $_FILES['file'];
@@ -47,12 +48,11 @@ function getTheSelectedImage($data)
     $_SESSION['fileDestination'] = $fileDestination;
     $_SESSION['fileTempName'] = $fileTmpName;
     $_SESSION['thumbDestination'] = $thumbDestination;
+
 }
 
 function validateSelectedFile()
 { 
-  echo "$passedValidation";
-  echo "<br>";
   header('Content-Type: text/html; charset=utf-8');
 
 try {
@@ -72,6 +72,7 @@ try {
             break;
         case UPLOAD_ERR_NO_FILE:
             die('Please select a file before clicking the "Get Image" button');
+            echo "<script type='text/javascript'>alert('select a file');</script>";
             // throw new RuntimeException('No file sent.');
         case UPLOAD_ERR_INI_SIZE:
         case UPLOAD_ERR_FORM_SIZE:
@@ -135,6 +136,63 @@ try {
 }
 }
 
+function yearFieldValidation()
+{
+  // header('Content-Type: text/html; charset=utf-8');
+
+  // unset($_SESSION['long']);
+    
+    $year = $_POST['year']; 
+    $minimumYear = '1900';
+    $currentYear = date('Y');
+
+    // $selectedLocation = $_POST['postlng'];
+    // $sessionLocation = $_SESSION['long'];
+
+    // echo "the location value is ".$selectedLocation;
+    // echo "<br>";
+    // echo "the location value length is ".strlen($selectedLocation);
+    // echo "<br>";
+
+    // echo "<br>";
+    // echo "the session location value is ".$sessionLocation;
+    // echo "<br>";
+    // echo "the session location value length is ".strlen($sessionLocation);
+    // echo "<br>";
+
+    // // session_unset($_SESSION['long']);
+
+    // echo "<br>";
+    // echo "the new session location value is ".$sessionLocation;
+    // echo "<br>";
+    // echo "the new session location value length is ".strlen($sessionLocation);
+    // echo "<br>";
+
+    // Check if year field is blank
+    if (!strlen($year) > 0) {
+        exit('the year is empty');            
+    }
+    // Check if year field is less than the minimum allowed
+    elseif ($year < 1900) {
+      exit('year must be greater than'.$minimumYear);            
+    }
+        // Check if year field is greater than the current year
+    elseif ($year > $currentYear) {
+      exit('year must be less than '.$currentYear);            
+    }
+}
+
+function locationValidation()
+{
+  
+  $selectedLocation = $_SESSION['long'];
+  // Check if location is set
+  
+  if (strlen($selectedLocation) == 0) {
+    exit('choose a location');            
+}
+}
+
 function displaySelectedImage()
 { 
   echo "<div class='uploadMap'>";
@@ -184,14 +242,18 @@ function uploadTheSelectedImage()
   require '../model/db_connect.php';
   require '../model/uploadQueries.php';
 
+  yearFieldValidation();
+  locationValidation();
+  // die('Please select a file before clicking the "Get Image" button');
+
   // move_uploaded_file($fTmpName, $fDestination);
   
   //execute the database instertion
   $dbc->query($insertSelectedImageToDatabaseQuery);
 
   //navigate to the tagging page
-  header("location: uploadImages.php");
-  //header("location: tagImages.php");
+//   header("location: uploadImages.php");
+  header("location: tagImages.php");
 }
 
 function getVisionTags($selectedFile)

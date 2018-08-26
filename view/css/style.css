@@ -161,6 +161,7 @@ label.highlight {
 }
 
 #pac-input {
+  color: #000000;
   background-color: #fff;
   display: block;
   font-family: Roboto;
