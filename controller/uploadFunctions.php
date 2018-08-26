@@ -139,12 +139,12 @@ try {
 function yearFieldValidation()
 {  
     $year = $_POST['year']; 
-    $minimumYear = '1900';
+    $minimumYear = '1816';
     $currentYear = date('Y');
 
     // Check if year field is blank
     if (!filter_var($year, FILTER_VALIDATE_INT)) {
-      exit('year must be numeric value between '.$minimumYear.' and '.$currentYear);            
+      exit('Please enter a numeric year value between '.$minimumYear.' and '.$currentYear);            
     }
     elseif (!strlen($year) > 0) {
         exit('the year is empty');            
@@ -183,7 +183,7 @@ function tagImage()
   echo "<h1>Selected Image</h1>";
   echo "<img src={$_SESSION['thumbDestination']} class='selectedImage'>";
   echo "<form action='onePageUpload.php' method='post'>";    
-  echo "<input type='text' placeholder = 'Enter year value here *' id='year' name='year'><br>";
+  echo "<input type='text' required placeholder = 'Enter year value here *' id='year' name='year'><br>";
   echo '<input id="pac-input" class="controls" type="text" placeholder="Search Box">
     <div id="map" class="uploadMap"></div>
     <div id="result" class="selectedImage"></div>';
@@ -202,7 +202,8 @@ function displayUploadImage()
   echo "<form action='uploadImages.php' method='post'>";
   
   //display the year field  
-  echo "Year: <input type='text' placeholder = 'Enter year value here *'' id='year' name='year'><br>";
+  //echo "Year: <input type='text' required placeholder = 'Enter year value here *'' id='year' name='year'><br>";
+  echo "Year: <input type='number' min='1816' max='2018' required placeholder = 'Enter year value here *'' id='year' name='year'><br>";
   
   //display the map and its search box
   echo '<input id="pac-input" class="controls" type="text" placeholder="Search Box">
