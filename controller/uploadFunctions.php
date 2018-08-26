@@ -137,39 +137,16 @@ try {
 }
 
 function yearFieldValidation()
-{
-  // header('Content-Type: text/html; charset=utf-8');
-
-  // unset($_SESSION['long']);
-    
+{  
     $year = $_POST['year']; 
     $minimumYear = '1900';
     $currentYear = date('Y');
 
-    // $selectedLocation = $_POST['postlng'];
-    // $sessionLocation = $_SESSION['long'];
-
-    // echo "the location value is ".$selectedLocation;
-    // echo "<br>";
-    // echo "the location value length is ".strlen($selectedLocation);
-    // echo "<br>";
-
-    // echo "<br>";
-    // echo "the session location value is ".$sessionLocation;
-    // echo "<br>";
-    // echo "the session location value length is ".strlen($sessionLocation);
-    // echo "<br>";
-
-    // // session_unset($_SESSION['long']);
-
-    // echo "<br>";
-    // echo "the new session location value is ".$sessionLocation;
-    // echo "<br>";
-    // echo "the new session location value length is ".strlen($sessionLocation);
-    // echo "<br>";
-
     // Check if year field is blank
-    if (!strlen($year) > 0) {
+    if (!filter_var($year, FILTER_VALIDATE_INT)) {
+      exit('year must be numeric value between '.$minimumYear.' and '.$currentYear);            
+    }
+    elseif (!strlen($year) > 0) {
         exit('the year is empty');            
     }
     // Check if year field is less than the minimum allowed
