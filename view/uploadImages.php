@@ -36,7 +36,7 @@ if(isset($_POST['submit']))
 $fDestination = $_SESSION['fileDestination'];
 if(isset($_FILES['file']))
 {
-  displayUploadImage();  
+  displayOnImageSelection();  
   readExifFromUploadedImages($fDestination);    
 }
 

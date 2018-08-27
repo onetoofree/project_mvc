@@ -12,7 +12,7 @@ putenv('GOOGLE_APPLICATION_CREDENTIALS=/Library/WebServer/Documents/project/apiK
 <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <title>Successful Upload</title>
+    <title>Tag Images</title>
     <script src="http://code.jquery.com/jquery-latest.min.js" charset="utf-8"></script>
     <?php include 'css/css.html'; ?>
 </head>

@@ -192,8 +192,11 @@ function tagImage()
   echo "</div>";
 }
 
-function displayUploadImage()
+function displayOnImageSelection()
 {
+  $year = $_POST['year']; 
+  $minimumYear = '1816';
+  $currentYear = date('Y');
   echo "<div class='uploadMap'>";  
   echo "<h1>Selected Image</h1>";
   
@@ -203,7 +206,7 @@ function displayUploadImage()
   
   //display the year field  
   //echo "Year: <input type='text' required placeholder = 'Enter year value here *'' id='year' name='year'><br>";
-  echo "Year: <input type='number' min='1816' max='2018' required placeholder = 'Enter year value here *'' id='year' name='year'><br>";
+  echo "Year: <input type='number' min='$minimumYear' max='$currentYear' required placeholder = 'Enter year value here *'' id='year' name='year'><br>";
   
   //display the map and its search box
   echo '<input id="pac-input" class="controls" type="text" placeholder="Search Box">
@@ -226,7 +229,7 @@ function uploadTheSelectedImage()
 
   // move_uploaded_file($fTmpName, $fDestination);
   
-  //execute the database instertion
+  //execute the database insertion
   $dbc->query($insertSelectedImageToDatabaseQuery);
 
   //navigate to the tagging page

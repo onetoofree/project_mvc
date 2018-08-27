@@ -9,7 +9,6 @@ $longi = $_SESSION['long'];
 $year = $_POST['year'];
 $lat = $_POST['postlat'];
 $long = $_POST['postlng'];
-// $_SESSION['yearValue'] = $year;
 $username = $_SESSION['username'];
 $make = $_SESSION['Make'];
 $model = $_SESSION['Model'];
