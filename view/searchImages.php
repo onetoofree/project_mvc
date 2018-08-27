@@ -136,12 +136,12 @@ $searchResults = performSearch();
 
             markers(map);
             
-         var coords = <?php echo json_encode($searchResults); ?>;
+        var coords = <?php echo json_encode($searchResults); ?>;
 
         function markers(map)
         {
             //have a look at this - need to do this way?
-            $.getJSON('coords.json', function(data)                
+            $.getJSON('coords', function(data)                
 				{
                     for(i in coords)
                     {
@@ -171,13 +171,13 @@ $searchResults = performSearch();
         <input type='hidden' id='locLatCoords' name='locLatCoords' value="">
         <input type='hidden' id='locLngCoords' name='locLngCoords' value="">
         <td class='search-text'>
-        Search Radius: <input type='text' placeholder = 'Enter radius around selected location to search' id='searchRadius' name='searchRadius'>
+        Search Radius: <input type='number' placeholder = 'Enter radius around selected location to search' id='searchRadius' name='searchRadius'>
         </td> 
         <td class='search-text'>
-        Start Year: <input type='text' placeholder = 'Enter start year value' id='yearSearchStart' name='yearSearchStart'>
+        Start Year: <input type='number' placeholder = 'Enter start year value' id='yearSearchStart' name='yearSearchStart'>
         </td>
         <td class='search-text'>
-        End Year: <input type='text' placeholder = 'Enter end year value' id='yearSearchEnd' name='yearSearchEnd'>
+        End Year: <input type='number' placeholder = 'Enter end year value' id='yearSearchEnd' name='yearSearchEnd'>
         </td>        
         </tr>
         
@@ -315,7 +315,7 @@ $searchResults = performSearch();
         ?>
         
         <tr>
-        <td><button type='submit' class='button button-block' name='mapSearch' />Search for Images</button></td>
+        <td><button type='submit' class='button button-block' name='imageSearch' />Search for Images</button></td>
         </tr>
         </table>
     </div>
@@ -324,7 +324,7 @@ $searchResults = performSearch();
     
 
 <?php
-if(isset($_POST['mapSearch']))
+if(isset($_POST['imageSearch']))
 {   
     if(count($searchResults) > 0)
     {
@@ -350,14 +350,11 @@ if(isset($_POST['mapSearch']))
     
     <script>
 
-    //there's a 403 error in here somewhere...try to sort.  
-    //maybe the query needs to restrict where there is no thumbnail
-
-    var coords = <?php echo json_encode($searchResults); ?>;
+    var images = <?php echo json_encode($searchResults); ?>;
     var fullGallery = '';
-    for (i in coords)
+    for (i in images)
     {
-        fullGallery += '<a href = "' + coords[i].imagepath + '" data-lightbox = "gallery"><img src = "'+ coords[i].thumbnailpath + '">';
+        fullGallery += '<a href = "' + images[i].imagepath + '" data-lightbox = "gallery"><img src = "'+ images[i].thumbnailpath + '">';
     }
     $('.imageGallery').append(fullGallery);
 

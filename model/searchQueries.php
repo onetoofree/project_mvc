@@ -58,7 +58,8 @@ $locationAndRadiusQuery =
                   )
                 ) AS distance
               FROM project.images
-              HAVING distance < $searchRadius";
+              HAVING distance < $searchRadius
+              AND thumbnailpath <>''";
 
 //Location and no radius set
 $locationNoRadiusQuery = 
@@ -73,7 +74,8 @@ $locationNoRadiusQuery =
                   )
                 ) AS distance
               FROM project.images
-              HAVING distance <= 1";
+              HAVING distance <= 1
+              AND thumbnailpath <>''";
 
 //Year------------------------->
 //Year start set but year end blank

@@ -5,8 +5,8 @@ function performSearch()
     require '../model/db_connect.php';
     require '../model/searchQueries.php';
 
-    if(isset($_POST['mapSearch']))
-{
+    if(isset($_POST['imageSearch']))
+    {
     
     $query = $baselineSearchQuery;
 
