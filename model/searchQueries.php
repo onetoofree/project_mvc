@@ -39,7 +39,8 @@ $tagArray = [];
 //baseline search query
 $baselineSearchQuery = "SELECT * 
 FROM project.images
-WHERE imageid IS NOT NULL";
+WHERE imageid IS NOT NULL
+AND thumbnailpath <>''";
 
 //filtered searches
 //Location------------------------->

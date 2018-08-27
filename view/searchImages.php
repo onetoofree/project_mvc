@@ -326,15 +326,25 @@ $searchResults = performSearch();
 <?php
 if(isset($_POST['mapSearch']))
 {   
-    echo "<br>";
-
-    echo "<h2>Image Gallery</h2>";
-    
-    echo 
-    '
-    <div class = "imageGallery">
-    </div>
-    ';
+    if(count($searchResults) > 0)
+    {
+        $numberOfImagesReturned = count($searchResults);
+        
+        echo "<br>";
+        echo "<h2>".$numberOfImagesReturned." images found</h2>";
+        echo "<br>";
+        echo "<h2>Image Gallery</h2>";
+        echo 
+        '
+        <div class = "imageGallery">
+        </div>
+        ';
+    }
+    else
+    {
+        echo "<br>";
+        echo "<h2>No Images Found</h2>";
+    }
 }
 ?>
     
