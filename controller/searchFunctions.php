@@ -137,6 +137,9 @@ function performSearch()
              echo $query;
              echo "<br>";
         }
+
+        //add the order by
+        $query = $query .=$orderByQueryEnd;
         
         $stmt = $dbc->prepare($query);
         $stmt->execute();

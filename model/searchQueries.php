@@ -42,6 +42,9 @@ FROM project.images
 WHERE imageid IS NOT NULL
 AND thumbnailpath <>''";
 
+$orderByQueryEnd = 
+" ORDER BY imageid DESC";
+
 //filtered searches
 //Location------------------------->
 

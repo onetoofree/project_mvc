@@ -25,7 +25,7 @@ else {
 <body>
   <div class="form">
 
-          <h1>Welcome</h1>
+          <h1 name="welcomeMessage">Welcome</h1>
           
           <p>
           <?php 
@@ -55,7 +55,7 @@ else {
           
           ?>
           
-          <h2><?php echo $username; ?></h2>
+          <h2 name="userGreeting"><?php echo $username; ?></h2>
           <p><?= $email ?></p>
           
           <!-- <a href="upload.php"><button class="button button-block" name="upload"/>Upload</button></a> -->
