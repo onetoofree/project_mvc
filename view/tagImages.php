@@ -19,7 +19,7 @@ putenv('GOOGLE_APPLICATION_CREDENTIALS=/Library/WebServer/Documents/project/apiK
 
 <body>
 <div class="form">
-<h1>Would you like to tag your uploaded image?</h1>  
+<h1 name="tagQuestion">Would you like to tag your uploaded image?</h1>  
 
 <?php
 

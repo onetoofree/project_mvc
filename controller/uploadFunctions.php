@@ -150,7 +150,7 @@ function yearFieldValidation()
         exit('the year is empty');            
     }
     // Check if year field is less than the minimum allowed
-    elseif ($year < 1900) {
+    elseif ($year < 1816) {
       exit('year must be greater than'.$minimumYear);            
     }
         // Check if year field is greater than the current year
