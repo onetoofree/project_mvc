@@ -7,11 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 class thumbnailTest extends TestCase
 {
-    public function testTrueAssertsToTruex()
-    {
-        $this->assertTrue(true);
-    }
-
     public function testThumbnailCreated()
     {
         createThumbnail('Beach.jpg');

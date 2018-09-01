@@ -331,7 +331,7 @@ if(isset($_POST['imageSearch']))
         $numberOfImagesReturned = count($searchResults);
         
         echo "<br>";
-        echo "<h2>".$numberOfImagesReturned." images found</h2>";
+        echo "<h2 name='resultsCount'>".$numberOfImagesReturned." images found</h2>";
         echo "<br>";
         echo "<h2>Image Gallery</h2>";
         echo 
