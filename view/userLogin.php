@@ -53,6 +53,7 @@ Password: <input type="password" name="password"><br>
 			<span class="req"></span>
 			<!-- Username<span class="req">*</span> -->
             </label>
+            
             <input type="text" placeholder = "Username *" required autocomplete="off" name="username"/>
           </div>
           

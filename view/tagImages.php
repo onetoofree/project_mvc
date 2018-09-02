@@ -2,6 +2,10 @@
 require '../model/db_connect.php';
 require '../controller/uploadFunctions.php';
 session_start();
+    if(!$_SESSION['logged_in']==true)
+    {
+      header("location: userLogin.php");
+    }
 
 ob_start();
 putenv('GOOGLE_APPLICATION_CREDENTIALS=/Library/WebServer/Documents/project/apiKey.json');

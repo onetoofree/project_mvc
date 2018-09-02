@@ -3,6 +3,7 @@ ob_start();
 /* User login process, checks if user exists and password is correct */
 require '../model/registrationAndLoginQueries.php';
 // Set session variables to be used on profile.php page
+//do I need this?...below session stuff...
 $_SESSION['email'] = $_POST['email'];
 $_SESSION['username'] = $_POST['username'];
 $_SESSION['password'] = $_POST['password'];
@@ -28,7 +29,7 @@ else { // User exists
         $_SESSION['username'] = $user['username'];
         //$_SESSION['first_name'] = $user['first_name'];
         //$_SESSION['last_name'] = $user['last_name'];
-        $_SESSION['active'] = $user['active'];
+        //$_SESSION['active'] = $user['active'];
         
         // This is how we'll know the user is logged in
         $_SESSION['logged_in'] = true;
@@ -37,7 +38,7 @@ else { // User exists
         echo "Login success";
     }
     else {
-        //$_SESSION['message'] = "You have entered wrong password, try again! ";
+        $_SESSION['message'] = "You have entered wrong password, try again! ";
         //$_SESSION['message'] =  $user['password'];
         //$_SESSION['message1'] =  $_POST['password'];
         
