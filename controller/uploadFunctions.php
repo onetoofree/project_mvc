@@ -19,7 +19,7 @@ function createThumbnail($fileName)
 
 function getTheSelectedImage($data)
 {
-    session_unset($_SESSION['long']);
+    unset($_SESSION['long']);
     validateSelectedFile(); 
 
     $file = $_FILES['file'];
@@ -166,6 +166,8 @@ function locationValidation()
   // Check if location is set
   
   if (strlen($selectedLocation) == 0) {
+    $_SESSION['message'] = "You didn't select a location";
+    header("location: error.php");
     exit('choose a location');            
 }
 }
@@ -224,17 +226,39 @@ function uploadTheSelectedImage()
   require '../model/uploadQueries.php';
 
   yearFieldValidation();
-  locationValidation();
+  //locationValidation();
+
+  $selectedLocation = $_SESSION['long'];
+  // Check if location is set
+  //$selectedFile = $_SESSION['selectedFile'];
+  
+  if (strlen($selectedLocation) == 0) 
+  {
+    // $_SESSION['message'] = "You didn't select a location";
+    // header("location: error.php");
+    // exit('choose a location');
+    //getTheSelectedImage($selectedFile); 
+    //print_r($selectedFile);
+    echo "You didn't select a location";       
+  }
+  else
+  {
+    $dbc->query($insertSelectedImageToDatabaseQuery);
+
+  //navigate to the tagging page
+//   header("location: uploadImages.php");
+  header("location: tagImages.php");
+  }
   // die('Please select a file before clicking the "Get Image" button');
 
   // move_uploaded_file($fTmpName, $fDestination);
   
   //execute the database insertion
-  $dbc->query($insertSelectedImageToDatabaseQuery);
+//   $dbc->query($insertSelectedImageToDatabaseQuery);
 
-  //navigate to the tagging page
-//   header("location: uploadImages.php");
-  header("location: tagImages.php");
+//   //navigate to the tagging page
+// //   header("location: uploadImages.php");
+//   header("location: tagImages.php");
 }
 
 function getVisionTags($selectedFile)

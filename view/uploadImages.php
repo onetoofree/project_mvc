@@ -34,7 +34,7 @@ putenv('GOOGLE_APPLICATION_CREDENTIALS=/Library/WebServer/Documents/project/apiK
 <?php
 if(isset($_POST['submit']))
 {  
-  getTheSelectedImage($_FILES);   
+  getTheSelectedImage($_FILES);
 }
 
 $fDestination = $_SESSION['fileDestination'];

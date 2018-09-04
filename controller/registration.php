@@ -23,8 +23,15 @@ $active = 0;
 // Check if user with that email already exists
 $result = $dbc->query("SELECT * FROM user WHERE email='$email' OR username='$username'") or die($dbc->error());
 
+//check if any fields are empty
+if(strlen($username) == 0 || strlen($email) == 0 || strlen($password) == 0)
+{
+    $_SESSION['message'] = 'Username, Email and Password are mandatory.  Please check if any are missing and try again';
+    header("location: error.php");
+}
+
 // We know user email exists if the rows returned are more than 0
-if ( $result->num_rows > 0 ) {
+elseif ( $result->num_rows > 0 ) {
     
     $_SESSION['message'] = 'User with this email or username already exists!';
     header("location: error.php");

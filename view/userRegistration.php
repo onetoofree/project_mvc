@@ -33,13 +33,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 
 <form action="userRegistration.php" method="post">
 <div class="field-wrap">
-Username<input type="text" required placeholder = "Username *" name="username">
+Username<input type="text" placeholder = "Username *" name="username">
 </div>
 <div class="field-wrap">
-Email Address<input type="text" required placeholder = "Email Address *" name="email">
+Email Address<input type="text" placeholder = "Email Address *" name="email">
 </div>
 <div class="field-wrap">
-Password<input type="password" required placeholder = "Password *" name="password">
+Password<input type="password" placeholder = "Password *" name="password">
 </div>
 <button type="submit" class="button button-block" name="register" />Register</button>
 </form>

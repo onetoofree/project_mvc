@@ -15,7 +15,7 @@ $username = $dbc->escape_string($_POST['username']);
 $result = $dbc->query($checkLoginDetailsQuery);
 
 if ( $result->num_rows == 0 ){ // User doesn't exist
-    $_SESSION['message'] = "User with that email doesn't exist!";
+    $_SESSION['message'] = "User with that username doesn't exist!";
     header("location: error.php");
 }
 else { // User exists

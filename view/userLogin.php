@@ -54,14 +54,14 @@ Password: <input type="password" name="password"><br>
 			<!-- Username<span class="req">*</span> -->
             </label>
             
-            <input type="text" placeholder = "Username *" required autocomplete="off" name="username"/>
+            <input type="text" placeholder = "Username *" autocomplete="off" name="username"/>
           </div>
           
           <div class="field-wrap">
             <label>
               <span class="req"></span>
             </label>
-            <input type="password" placeholder = "Password *" required autocomplete="off" name="password"/>
+            <input type="password" placeholder = "Password *" autocomplete="off" name="password"/>
           </div>
           
           <button class="button button-block" name="login" />Log In</button>

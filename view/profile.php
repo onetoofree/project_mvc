@@ -56,7 +56,7 @@ else {
           ?>
           
           <h2 name="userGreeting"><?php echo $username; ?></h2>
-          <p><?= $email ?></p>
+          <p name="emailGreeting"><?= $email ?></p>
           
           <!-- <a href="upload.php"><button class="button button-block" name="upload"/>Upload</button></a> -->
           <a href="uploadImages.php"><button class="button button-block" name="upload"/>Upload</button></a>

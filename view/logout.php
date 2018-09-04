@@ -18,7 +18,7 @@ session_destroy();
               
           <p><?= 'You have been logged out!'; ?></p>
           
-          <a href="userLogin.php"><button class="button button-block"/>Go to login page</button></a>
+          <a href="userLogin.php"><button name="goToLogin" class="button button-block"/>Go to login page</button></a>
 
     </div>
 </body>

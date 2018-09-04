@@ -11,7 +11,7 @@ session_start();
 <body>
 <div class="form">
     <h1>Error</h1>
-    <p>
+    <p name="errorMessage">
     <?php 
     if( isset($_SESSION['message']) AND !empty($_SESSION['message']) ): 
         echo $_SESSION['message'];    
@@ -20,7 +20,7 @@ session_start();
     endif;
     ?>
     </p>     
-    <a href="javascript:history.back()"><button class="button button-block"/>Return</button></a>
+    <a href="javascript:history.back()"><button name="return" class="button button-block"/>Return</button></a>
 </div>
 </body>
 </html>

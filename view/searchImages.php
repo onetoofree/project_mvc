@@ -175,19 +175,19 @@ $searchResults = performSearch();
         <input type='hidden' id='locLatCoords' name='locLatCoords' value="">
         <input type='hidden' id='locLngCoords' name='locLngCoords' value="">
         <td class='search-text'>
-        Search Radius: <input type='number' placeholder = 'Enter radius around selected location to search' id='searchRadius' name='searchRadius'>
+        Search Radius: <input type='number' placeholder = 'Enter radius around selected location to search' id='searchRadius' name='searchRadius' value='<?php echo isset($_POST["searchRadius"]) ? $_POST["searchRadius"] : "" ?>'>
         </td> 
         <td class='search-text'>
-        Start Year: <input type='number' placeholder = 'Enter start year value' id='yearSearchStart' name='yearSearchStart'>
+        Start Year: <input type='number' placeholder = 'Enter start year value' id='yearSearchStart' name='yearSearchStart' value='<?php echo isset($_POST["yearSearchStart"]) ? $_POST["yearSearchStart"] : "" ?>'>
         </td>
         <td class='search-text'>
-        End Year: <input type='number' placeholder = 'Enter end year value' id='yearSearchEnd' name='yearSearchEnd'>
+        End Year: <input type='number' placeholder = 'Enter end year value' id='yearSearchEnd' name='yearSearchEnd' value='<?php echo isset($_POST["yearSearchEnd"]) ? $_POST["yearSearchEnd"] : "" ?>'>
         </td>        
         </tr>
         
         <tr>
             <td class='search-text'>
-        Enter tag values separated by commas: <textarea rows="4" cols="50" placeholder = 'Enter comma separated tags' id="tagSearch" name="tagSearch"></textarea>
+        Enter tag values separated by commas: <textarea rows="4" cols="50" placeholder = 'Enter comma separated tags' id="tagSearch" name="tagSearch"><?php echo isset($_POST['tagSearch']) ? $_POST['tagSearch'] : '' ?></textarea>
         </td>
         </tr>
         <br>
