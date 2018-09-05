@@ -1,6 +1,4 @@
 <?php
-
-
     require '../model/searchQueries.php';
     require '../controller/searchFunctions.php';
     require '../model/db_connect.php';
@@ -172,16 +170,16 @@ $searchResults = performSearch();
         <table>
         <tr>
         <form method='post'>       
-        <input type='hidden' id='locLatCoords' name='locLatCoords' value="">
-        <input type='hidden' id='locLngCoords' name='locLngCoords' value="">
+        <input type='hidden' id='locLatCoords' name='locLatCoords' value="<?php echo isset($_POST['locLatCoords']) ? $_POST['locLatCoords'] : '' ?>">
+        <input type='hidden' id='locLngCoords' name='locLngCoords' value="<?php echo isset($_POST['locLngCoords']) ? $_POST['locLngCoords'] : '' ?>">
         <td class='search-text'>
         Search Radius: <input type='number' placeholder = 'Enter radius around selected location to search' id='searchRadius' name='searchRadius' value='<?php echo isset($_POST["searchRadius"]) ? $_POST["searchRadius"] : "" ?>'>
         </td> 
         <td class='search-text'>
-        Start Year: <input type='number' placeholder = 'Enter start year value' id='yearSearchStart' name='yearSearchStart' value='<?php echo isset($_POST["yearSearchStart"]) ? $_POST["yearSearchStart"] : "" ?>'>
+        Start Year: <input type='number' placeholder = 'Enter start year' id='yearSearchStart' name='yearSearchStart' value='<?php echo isset($_POST["yearSearchStart"]) ? $_POST["yearSearchStart"] : "" ?>'>
         </td>
         <td class='search-text'>
-        End Year: <input type='number' placeholder = 'Enter end year value' id='yearSearchEnd' name='yearSearchEnd' value='<?php echo isset($_POST["yearSearchEnd"]) ? $_POST["yearSearchEnd"] : "" ?>'>
+        End Year: <input type='number' placeholder = 'Enter end year' id='yearSearchEnd' name='yearSearchEnd' value='<?php echo isset($_POST["yearSearchEnd"]) ? $_POST["yearSearchEnd"] : "" ?>'>
         </td>        
         </tr>
         
@@ -320,6 +318,11 @@ $searchResults = performSearch();
         
         <tr>
         <td><button type='submit' class='button button-block' name='imageSearch' />Search for Images</button></td>
+        <td><button class='button button-block' name='upload'/>Upload</button></td>
+        <td><button class='button button-block' name='logout'/>Log Out</button></td>
+        </tr>
+        <tr>
+        
         </tr>
         </table>
     </div>
@@ -349,6 +352,16 @@ if(isset($_POST['imageSearch']))
         echo "<br>";
         echo "<h2>No Images Found</h2>";
     }
+}
+
+if(isset($_POST['logout']))
+{   
+    header("location: logout.php");    
+}
+
+if(isset($_POST['upload']))
+{   
+    header("location: uploadImages.php");    
 }
 ?>
     

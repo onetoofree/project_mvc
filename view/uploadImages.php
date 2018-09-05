@@ -28,6 +28,9 @@ putenv('GOOGLE_APPLICATION_CREDENTIALS=/Library/WebServer/Documents/project/apiK
       <input type="file" required name="file"><br>
       <button class="button button-block" type="submit" name="submit" />Get Image</button>
     </form>
+    <form method="POST">
+      <button class="button button-block" type="submit" name="profile" />Return To Profile</button>
+    </form>
   </div>
 </div>
 
@@ -47,6 +50,11 @@ if(isset($_FILES['file']))
 if(isset($_POST['uploadImage']))
 {
   uploadTheSelectedImage($_FILES);     
+}
+
+if(isset($_POST['profile']))
+{   
+    header("location: profile.php");    
 }
 ?>
 

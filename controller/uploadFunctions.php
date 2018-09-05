@@ -76,7 +76,9 @@ try {
             // throw new RuntimeException('No file sent.');
         case UPLOAD_ERR_INI_SIZE:
         case UPLOAD_ERR_FORM_SIZE:
-            die('The file you have selected is too large.  The maximum size is 1MB.');
+            echo "<div name='sizeError'>The file you have selected is too large.  The maximum size is 1MB.</div>";
+            die();
+            // die('The file you have selected is too large.  The maximum size is 1MB.');
             // throw new RuntimeException('The file you have selected is too large.  The maximum size is 1MB.');
         default:
             throw new RuntimeException('Unknown errors.');
@@ -84,12 +86,16 @@ try {
 
     // You should also check filesize here. 
     if ($_FILES['file']['size'] > 1000000) {
-        die('The file you have selected is too large.  The maximum size is 1MB.');
+      echo "<p>The file you have selected is too large.  The maximum size is 1MB.</p>";
+      die();
+      //die('The file you have selected is too large.  The maximum size is 1MB.');
         //throw new RuntimeException('Exceeded filesize limit.');        
     }
     elseif($_FILES['file']['size'] < 40000)
     {
-      die('The file you have selected is too small.  The minimum size is 40KB.');
+      echo "<div name='sizeError'>The file you have selected is too small.  The minimum size is 40KB.</div>";
+            die();
+      //die('The file you have selected is too small.  The minimum size is 40KB.');
     }
 
     // DO NOT TRUST $_FILES['file']['mime'] VALUE !!
@@ -104,7 +110,9 @@ try {
         ),
         true
     )) {
-        die('The file you have selected is of an invalid format.  Please select files of type jpg/jpeg, png or gif only.');
+        echo "<div name='sizeError'>The file you have selected is of an invalid format.  Please select files of type jpg/jpeg, png or gif only.</div>";
+        die();
+        //die('The file you have selected is of an invalid format.  Please select files of type jpg/jpeg, png or gif only.');
         //throw new RuntimeException('Invalid file format.');
         
     }
@@ -200,7 +208,7 @@ function displayOnImageSelection()
   $minimumYear = '1816';
   $currentYear = date('Y');
   echo "<div class='uploadMap'>";  
-  echo "<h1>Selected Image</h1>";
+  echo "<h1 name='selectedImage'>Selected Image</h1>";
   
   //display the selected image
   echo "<img src={$_SESSION['thumbDestination']} class='selectedImage'>";
@@ -239,7 +247,7 @@ function uploadTheSelectedImage()
     // exit('choose a location');
     //getTheSelectedImage($selectedFile); 
     //print_r($selectedFile);
-    echo "You didn't select a location";       
+    echo "<div name='locationError'>Please select a location before uploading the image</div>";       
   }
   else
   {
@@ -359,6 +367,13 @@ function displayTags($fDestination)
     echo "<tr>";
     echo "<td>";
     echo "<button type='submit' class='button button-block' name='addTags' />Click Here to Add Tags to Images</button>";
+    echo "</td>";    
+    echo "</tr>";
+
+    //go to profile button
+    echo "<tr>";
+    echo "<td>";
+    echo "<button class='button button-block' type='submit' name='profile' />Go To Profile Page</button>";
     echo "</td>";    
     echo "</tr>";
 
