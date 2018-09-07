@@ -207,6 +207,7 @@ function displayOnImageSelection()
   $year = $_POST['year']; 
   $minimumYear = '1826';
   $currentYear = date('Y');
+  $fDestination = $_SESSION['fileDestination'];
   echo "<div class='uploadMap'>";  
   echo "<h1 name='selectedImage'>Selected Image</h1>";
   
@@ -216,15 +217,63 @@ function displayOnImageSelection()
   
   //display the year field  
   //echo "Year: <input type='text' required placeholder = 'Enter year value here *'' id='year' name='year'><br>";
+  echo "<div class='search-text'>";  
   echo "Year: <input type='number' min='$minimumYear' max='$currentYear' required placeholder = 'Enter year value here *'' id='year' name='year'><br>";
+  echo "</div>";
   
   //display the map and its search box
   echo '<input id="pac-input" class="controls" type="text" placeholder="Search Box">
     <div id="map" class="uploadMap"></div>
     <div id="result" class="selectedImage"></div>';
   echo '<script src="../view/js/uploadMap.js"></script>';
-  echo "<button type='submit' class='button button-block' name='uploadImage' />Upload Image and Details</button>";
   
+  //display exif if extracted
+  readExifFromUploadedImages($fDestination);
+  
+  $cameraMake = $_SESSION['Make'];
+  $cameraModel = $_SESSION['Model'];
+  $shutterSpeed = $_SESSION['ExposureTime'];
+  $aperture = $_SESSION['ApertureFNumber'];
+  $iso = $_SESSION['ISOSpeedRatings'];
+  $resolution = $_SESSION['XResolution'];
+  echo "<div class='search-text'>";  
+  if(strlen($cameraMake) > 0 || strlen($cameraModel) > 0 || strlen($shutterSpeed) > 0 || strlen($aperture) > 0 || strlen($iso) > 0 || strlen($resolution) > 0)
+  {
+    echo "The following exif was extracted from the selected image: ";
+    echo "<br>";
+  }
+  if(strlen($cameraMake) > 0)
+  {
+    echo "Camera Make: ".$cameraMake;
+    echo "<br>";
+  }
+  if(strlen($cameraModel) > 0)
+  {
+    echo "Camera Model: ".$cameraModel;
+    echo "<br>";
+  }
+  if(strlen($shutterSpeed) > 0)
+  {
+    echo "Shutter Speed: ".$shutterSpeed;
+    echo "<br>";
+  }
+  if(strlen($aperture) > 0)
+  {
+    echo "Aperture: ".$aperture;
+    echo "<br>";
+  }
+  if(strlen($iso) > 0)
+  {
+    echo "ISO Setting: ".$iso;
+    echo "<br>";
+  }
+  if(strlen($resolution) > 0)
+  {
+    echo "Resolution: ".$resolution;
+    echo "<br>";
+  }
+  echo "</div>";
+  echo "<button type='submit' class='button button-block' name='uploadImage' />Upload Image and Details</button>";
   echo "</div>";
 }
 
