@@ -19,6 +19,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 		<?php include 'css/css.html'; ?>
 	</head>
 	<body>
+		<div class="search-text">
 		<div class="form">
 		<h1>User Registration Page</h1>
 
@@ -34,6 +35,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 				</div>
 				<button type="submit" class="button button-block" name="register" />Register</button>
 			</form>
+		</div>
 		</div>
 	</body>
 </html>

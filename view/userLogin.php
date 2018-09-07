@@ -23,10 +23,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 	<?php include 'css/css.html'; ?>
 </head>
 <body>
+<div class="search-text">
 <div class="form">
 
          <div id="login">   
-          <h1>Welcome!</h1>
+          <h1>Login</h1>
           
           <form action="userLogin.php" method="post" autocomplete="off">
           
@@ -34,7 +35,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
             <label>
 			<span class="req"></span>
             </label>
-            
+            Username
             <input type="text" placeholder = "Username *" autocomplete="off" name="username"/>
           </div>
           
@@ -42,6 +43,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
             <label>
               <span class="req"></span>
             </label>
+            Password
             <input type="password" placeholder = "Password *" autocomplete="off" name="password"/>
           </div>
           
@@ -50,6 +52,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
           </form>
         </div>
       </div>      
+</div>
 </div>
 </body>
 </html>
