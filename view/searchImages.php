@@ -75,10 +75,6 @@ $searchResults = performSearch();
           if (places.length == 0) {
             return;
           }
-          
-          
-
-        
         locationMarkers = [];
 
           // For each place, get the icon, name and location.
@@ -331,8 +327,8 @@ $searchResults = performSearch();
         
         <tr>
         <td><button type='submit' class='button button-block' name='imageSearch' />Search for Images</button></td>
-        <td><button class='button button-block' name='upload'/>Upload</button></td>
-        <td><button class='button button-block' name='logout'/>Log Out</button></td>
+        <td><button class='button button-block' name='reset'/>Reset</button></td>
+        <td><button class='button button-block' name='profile'/>Profile</button></td>
         </tr>
         <tr>
         
@@ -353,6 +349,10 @@ if(isset($_POST['imageSearch']))
         echo "<br>";
         echo "<h2 name='resultsCount'>".$numberOfImagesReturned." images found</h2>";
         echo "<br>";
+
+        displayFilters();
+
+        echo "<br>";
         echo "<h2>Image Gallery</h2>";
         echo 
         '
@@ -364,17 +364,18 @@ if(isset($_POST['imageSearch']))
     {
         echo "<br>";
         echo "<h2>No Images Found</h2>";
+        displayFilters();
     }
 }
 
-if(isset($_POST['logout']))
+if(isset($_POST['reset']))
 {   
-    header("location: logout.php");    
+    header("location: searchImages.php");    
 }
 
-if(isset($_POST['upload']))
+if(isset($_POST['profile']))
 {   
-    header("location: uploadImages.php");    
+    header("location: profile.php");    
 }
 ?>
     

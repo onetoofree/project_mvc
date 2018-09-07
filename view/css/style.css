@@ -107,6 +107,13 @@ h2 {
     margin: 0;
 }
 
+h3 {
+  text-align: center;
+  color: #b11a98;
+  font-weight: 500;
+  margin: 0;
+}
+
 span {
     color: #1ab188;
     font-weight: bold;

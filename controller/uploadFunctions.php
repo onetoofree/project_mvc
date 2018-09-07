@@ -56,50 +56,36 @@ function validateSelectedFile()
   header('Content-Type: text/html; charset=utf-8');
 
 try {
-    
-    // Undefined | Multiple Files | $_FILES Corruption Attack
-    // If this request falls under any of them, treat it invalid.
     if (
         !isset($_FILES['file']['error']) ||
         is_array($_FILES['file']['error'])
     ) {
         throw new RuntimeException('Invalid parameters.');
     }
-
-    // Check $_FILES['file']['error'] value.
+    // Check the $_FILES['file']['error'] value.
     switch ($_FILES['file']['error']) {
         case UPLOAD_ERR_OK:
             break;
-        case UPLOAD_ERR_NO_FILE:
-            die('Please select a file before clicking the "Get Image" button');
-            echo "<script type='text/javascript'>alert('select a file');</script>";
-            // throw new RuntimeException('No file sent.');
         case UPLOAD_ERR_INI_SIZE:
         case UPLOAD_ERR_FORM_SIZE:
-            echo "<div name='sizeError'>The file you have selected is too large.  The maximum size is 1MB.</div>";
+            echo "<div name='sizeError'>The file you have selected is too large.  The maximum size is 1.5MB.</div>";
             die();
-            // die('The file you have selected is too large.  The maximum size is 1MB.');
-            // throw new RuntimeException('The file you have selected is too large.  The maximum size is 1MB.');
         default:
             throw new RuntimeException('Unknown errors.');
     }
 
-    // You should also check filesize here. 
-    if ($_FILES['file']['size'] > 1000000) {
-      echo "<p>The file you have selected is too large.  The maximum size is 1MB.</p>";
-      die();
-      //die('The file you have selected is too large.  The maximum size is 1MB.');
-        //throw new RuntimeException('Exceeded filesize limit.');        
+    // check filesize here too. 
+    if ($_FILES['file']['size'] > 1500000) {
+      echo "<p>The file you have selected is too large.  The maximum size is 1.5MB.</p>";
+      die();           
     }
     elseif($_FILES['file']['size'] < 40000)
     {
       echo "<div name='sizeError'>The file you have selected is too small.  The minimum size is 40KB.</div>";
             die();
-      //die('The file you have selected is too small.  The minimum size is 40KB.');
     }
 
-    // DO NOT TRUST $_FILES['file']['mime'] VALUE !!
-    // Check MIME Type by yourself.
+    // Check file type
     $finfo = new finfo(FILEINFO_MIME_TYPE);
     if (false === $ext = array_search(
         $finfo->file($_FILES['file']['tmp_name']),
@@ -112,9 +98,6 @@ try {
     )) {
         echo "<div name='sizeError'>The file you have selected is of an invalid format.  Please select files of type jpg/jpeg, png or gif only.</div>";
         die();
-        //die('The file you have selected is of an invalid format.  Please select files of type jpg/jpeg, png or gif only.');
-        //throw new RuntimeException('Invalid file format.');
-        
     }
 
 } catch (RuntimeException $e) {
@@ -122,29 +105,6 @@ try {
     echo $e->getMessage();
 
 }
-}
-
-function yearFieldValidation()
-{  
-    $year = $_POST['year']; 
-    $minimumYear = '1826';
-    $currentYear = date('Y');
-
-    // Check if year field is blank
-    if (!filter_var($year, FILTER_VALIDATE_INT)) {
-      exit('Please enter a numeric year value between '.$minimumYear.' and '.$currentYear);            
-    }
-    elseif (!strlen($year) > 0) {
-        exit('the year is empty');            
-    }
-    // Check if year field is less than the minimum allowed
-    elseif ($year < 1826) {
-      exit('year must be greater than'.$minimumYear);            
-    }
-        // Check if year field is greater than the current year
-    elseif ($year > $currentYear) {
-      exit('year must be less than '.$currentYear);            
-    }
 }
 
 function locationValidation()
@@ -263,40 +223,17 @@ function uploadTheSelectedImage()
   require '../model/db_connect.php';
   require '../model/uploadQueries.php';
 
-  yearFieldValidation();
-  //locationValidation();
-
   $selectedLocation = $_SESSION['long'];
-  // Check if location is set
-  //$selectedFile = $_SESSION['selectedFile'];
   
   if (strlen($selectedLocation) == 0) 
   {
-    // $_SESSION['message'] = "You didn't select a location";
-    // header("location: error.php");
-    // exit('choose a location');
-    //getTheSelectedImage($selectedFile); 
-    //print_r($selectedFile);
     echo "<div name='locationError'>Please select a location before uploading the image</div>";       
   }
   else
   {
     $dbc->query($insertSelectedImageToDatabaseQuery);
-
-  //navigate to the tagging page
-//   header("location: uploadImages.php");
-  header("location: tagImages.php");
+    header("location: tagImages.php");
   }
-  // die('Please select a file before clicking the "Get Image" button');
-
-  // move_uploaded_file($fTmpName, $fDestination);
-  
-  //execute the database insertion
-//   $dbc->query($insertSelectedImageToDatabaseQuery);
-
-//   //navigate to the tagging page
-// //   header("location: uploadImages.php");
-//   header("location: tagImages.php");
 }
 
 function getVisionTags($selectedFile)
@@ -420,10 +357,6 @@ function displayTags($fDestination)
             array_push($selection, $checked[$i]);
         }        
     }
-    
-    //might use some of this stuff to add selected tag details to the page
-    // print_r($selection);
-    // echo "<br>";
     
     //format the selected tags in a way that can used to be added to the database
     $finalTags = preg_replace("/[^a-zA-Z0-9]+/", "", $selection);

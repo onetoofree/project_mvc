@@ -157,4 +157,73 @@ function performSearch()
 return $myArray;
 }
 
+function displayFilters()
+{
+    //data for set filters message
+$latitudeSet = $_POST['locLatCoords'];
+$longitudeSet = $_POST['locLngCoords'];
+$startYearSet = $_POST['yearSearchStart'];
+$endYearSet = $_POST['yearSearchEnd'];
+$radiusSet = $_POST['searchRadius'];
+$tagsSet = $_POST['tagSearch'];
+$cameraMakeSet = $_POST['cameraMake'];
+$cameraModelSet = $_POST['cameraModel'];
+$shutterSpeedSet = $_POST['shutterSpeed'];
+$apertureSet = $_POST['aperture'];
+$isoSet = $_POST['iso'];
+$resolutionSet = $_POST['resolution'];
+    if(strlen($latitudeSet) > 0 || strlen($longitudeSet) > 0 || strlen($startYearSet) > 0 || strlen($endYearSet) > 0 || strlen($radiusSet) > 0 || strlen($tagsSet) > 0 || strlen($cameraMakeSet) > 0 || strlen($cameraModelSet) > 0 || strlen($shutterSpeedSet) > 0 || strlen($apertureSet) > 0 || strlen($isoSet) > 0 || strlen($resolutionSet) > 0)
+        {
+            echo "<h2 name='filtersSet'>The following filters are set: </h2>";
+            if(strlen($latitudeSet) > 0 && (strlen($longitudeSet) > 0))
+            {
+                echo "<h3>location: ".$latitudeSet.",".$longitudeSet."</h3>";            
+            }
+            if(strlen($startYearSet) > 0)
+            {
+                echo "<h3>greater than or equal to year: ".$startYearSet."</h3>";            
+            }
+            if(strlen($endYearSet) > 0)
+            {
+                echo "<h3>less than or equal to year: ".$endYearSet."</h3>";            
+            }
+            if(strlen($radiusSet) > 0)
+            {
+                echo "<h3>mile radius around selected location: ".$radiusSet."</h3>";            
+            }
+            if(strlen($tagsSet) > 0)
+            {
+                echo "<h3>tags: ".$tagsSet."</h3>";            
+            }
+            if(strlen($cameraMakeSet) > 0)
+            {
+                echo "<h3>camera make: ".$cameraMakeSet."</h3>";            
+            }
+            if(strlen($cameraModelSet) > 0)
+            {
+                echo "<h3>camera model: ".$cameraModelSet."</h3>";            
+            }
+            if(strlen($shutterSpeedSet) > 0)
+            {
+                echo "<h3>shutter speed: ".$shutterSpeedSet."</h3>";            
+            }
+            if(strlen($apertureSet) > 0)
+            {
+                echo "<h3>aperture: ".$apertureSet."</h3>";            
+            }
+            if(strlen($isoSet) > 0)
+            {
+                echo "<h3>ISO: ".$isoSet."</h3>";            
+            }
+            if(strlen($resolutionSet) > 0)
+            {
+                echo "<h3>resolution: ".$resolutionSet."</h3>";            
+            }
+        }
+    else
+        {
+            echo "<h2>No filters are set</h2>";
+        }
+}
+
 ?>
