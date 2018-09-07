@@ -117,26 +117,6 @@ try {
         
     }
 
-    // You should name it uniquely.
-    // DO NOT USE $_FILES['file']['name'] WITHOUT ANY VALIDATION !!
-    // On this example, obtain safe unique name from its binary data.
-    // $tmpfname = tempnam('../uploads','ups');
-    // echo "new filename is";
-    // echo "<br>";
-    // echo $tmpfname;
-    // echo "<br>";
-    // if (!move_uploaded_file(
-    //     $_FILES['file']['tmp_name'],
-    //     sprintf('../uploads/%s.%s',
-    //         sha1_file($_FILES['file']['tmp_name']),
-    //         $ext
-    //     )
-    // )) {
-    //     throw new RuntimeException('Failed to move uploaded file.');
-    // }
-
-    // echo 'File is uploaded successfully.';
-
 } catch (RuntimeException $e) {
 
     echo $e->getMessage();
@@ -218,15 +198,16 @@ function displayOnImageSelection()
   //display the year field  
   //echo "Year: <input type='text' required placeholder = 'Enter year value here *'' id='year' name='year'><br>";
   echo "<div class='search-text'>";  
-  echo "Year: <input type='number' min='$minimumYear' max='$currentYear' required placeholder = 'Enter year value here *'' id='year' name='year'><br>";
-  echo "</div>";
+  echo "Image Year: <input type='number' min='$minimumYear' max='$currentYear' required placeholder = 'Enter year value here *'' id='year' name='year'><br>";
+  echo "Click the map below to select the location the image was taken:";
   
   //display the map and its search box
   echo '<input id="pac-input" class="controls" type="text" placeholder="Search Box">
     <div id="map" class="uploadMap"></div>
     <div id="result" class="selectedImage"></div>';
-  echo '<script src="../view/js/uploadMap.js"></script>';
   
+  echo '<script src="../view/js/uploadMap.js"></script>';
+  echo "</div>";
   //display exif if extracted
   readExifFromUploadedImages($fDestination);
   
