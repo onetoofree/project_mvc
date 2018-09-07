@@ -156,7 +156,20 @@ $searchResults = performSearch();
                             return function() {
                                 infowindow.setContent(popupImage);
                                 infowindow.open(map, marker);
-                                // console.log(infowindow);
+                            }
+                        })(marker, popupImage, infowindow));
+
+                        google.maps.event.addListener(marker, 'mouseover', (function(marker, popupImage, infowindow){
+                            return function() {
+                                infowindow.setContent(popupImage);
+                                infowindow.open(map, marker);
+                            }
+                        })(marker, popupImage, infowindow));
+
+                        google.maps.event.addListener(marker, 'mouseout', (function(marker, popupImage, infowindow){
+                            return function() {
+                                //infowindow.setContent(popupImage);
+                                infowindow.close();
                             }
                         })(marker, popupImage, infowindow));
                     }                    
@@ -184,7 +197,7 @@ $searchResults = performSearch();
         </tr>
         
         <tr>
-            <td class='search-text'>
+        <td class='search-text'>
         Enter tag values separated by commas: <textarea rows="4" cols="50" placeholder = 'Enter comma separated tags' id="tagSearch" name="tagSearch"><?php echo isset($_POST['tagSearch']) ? $_POST['tagSearch'] : '' ?></textarea>
         </td>
         </tr>
