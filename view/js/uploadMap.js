@@ -52,7 +52,6 @@
               icon: icon,
               title: place.name,
               position: place.geometry.location
-              //console.log(position);
             }));
 
             if (place.geometry.viewport) {
@@ -69,10 +68,6 @@
             
             placeMarkerAndPanTo(e.latLng, map);
             post(e.latLng, map);
-            // var coordinates = getCoords(e.latLng, map);
-            // var latitude = coordinates.lat();
-            // var longitude = coordinates.lng();
-            // alert("coords are: " + latitude + " and: " + longitude);
   });
 
  
