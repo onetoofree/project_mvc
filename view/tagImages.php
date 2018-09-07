@@ -43,8 +43,6 @@ if(isset($_POST['profile']))
 }
 ?>
 
-<script src="https://maps.googleapis.com/maps/api/js?v=3.32&key=AIzaSyD-gybpP1HdyxjzaMM5X2UcM2B1iLO4GMg&libraries=places&callback=initAutocomplete"
-         async defer></script>
 </div>
 </body>
 </html>
