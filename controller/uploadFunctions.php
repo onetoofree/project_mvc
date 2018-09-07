@@ -147,7 +147,7 @@ try {
 function yearFieldValidation()
 {  
     $year = $_POST['year']; 
-    $minimumYear = '1816';
+    $minimumYear = '1826';
     $currentYear = date('Y');
 
     // Check if year field is blank
@@ -158,7 +158,7 @@ function yearFieldValidation()
         exit('the year is empty');            
     }
     // Check if year field is less than the minimum allowed
-    elseif ($year < 1816) {
+    elseif ($year < 1826) {
       exit('year must be greater than'.$minimumYear);            
     }
         // Check if year field is greater than the current year
@@ -205,7 +205,7 @@ function tagImage()
 function displayOnImageSelection()
 {
   $year = $_POST['year']; 
-  $minimumYear = '1816';
+  $minimumYear = '1826';
   $currentYear = date('Y');
   echo "<div class='uploadMap'>";  
   echo "<h1 name='selectedImage'>Selected Image</h1>";

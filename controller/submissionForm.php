@@ -1,10 +1,7 @@
 <?php 
 require '../model/db_connect.php';
 session_start();
-
 ob_start();
-
-
 ?>
 
 
@@ -15,10 +12,7 @@ ob_start();
 	<script src="http://code.jquery.com/jquery-latest.min.js" charset="utf-8"></script>
 </head>
 
-
 <body>
-
-
 
 <?php
 
@@ -28,22 +22,16 @@ $yearValue = $_POST['year'];
 
 $_SESSION['long'] = $longitude;
 $_SESSION['lat'] = $latitude;
-
+echo "<div class='search-text'>";
+echo "The following location was selected:";
 echo "<br>";
-echo "the longitutde isss: $longitude";
+echo "Latitude: $latitude";
 echo "<br>";
-echo "the longitutde also isss:".$_SESSION['long'];
+echo "Longitude: $longitude";
 echo "<br>";
-echo "the latitude isss: $latitude";
-echo "<br>";
-echo "the year is: $yearValue"
+echo "</div>";
 
 ?>
-
-</table>
-
-</div>
-
 
 </body>
 </html>
