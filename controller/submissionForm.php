@@ -1,5 +1,4 @@
 <?php 
-require '../model/db_connect.php';
 session_start();
 ob_start();
 ?>
@@ -9,7 +8,6 @@ ob_start();
 <html>
 <head>
 	<title>Image Upload</title>
-	<script src="http://code.jquery.com/jquery-latest.min.js" charset="utf-8"></script>
 </head>
 
 <body>

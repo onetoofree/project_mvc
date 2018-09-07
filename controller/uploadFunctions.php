@@ -422,29 +422,35 @@ function displayTags($fDestination)
     }
     
     //might use some of this stuff to add selected tag details to the page
-    print_r($selection);
-    echo "<br>";
+    // print_r($selection);
+    // echo "<br>";
     
     //format the selected tags in a way that can used to be added to the database
     $finalTags = preg_replace("/[^a-zA-Z0-9]+/", "", $selection);
 
-    print_r($finalTags);
-    echo "<br>";
-
-    foreach($finalTags as $selectedTag)
+    // print_r($finalTags);
+    if(!empty($finalTags))
     {
-        print_r($selectedTag);
-        echo "<br>";
-        
+      echo "<div class='search-text'>";
+      echo "The following tags have been added to the image:";
+      echo "<br>";
+      foreach($finalTags as $selectedTag)
+      {
+          echo "--".$selectedTag;
+          echo "<br>";
+          
+      }
+      echo "<br>";
+      echo "You can add more tags by selecting others ";
+      echo "<br>";
+      echo "or entering another into the custom field and resubmitting";
+      echo "<br>";
+      echo "Click the 'Go to Profile Page' button to navigate to upload or search pages";
+
     }
-    echo "there are ".count($finalTags)." tags selected";
-    echo "<br>";
-    echo "the final tags are: ".$selection;
-    echo "<br>";
+    
     $_SESSION['listOfTags'] = $finalTags;
     $listOfTags = $_SESSION['listOfTags'];
-    print_r($listOfTags);
-    echo "<br>";
     foreach($finalTags as $sessionedTags)
     {
         $_SESSION[$sessionedTags] = $sessionedTags;
@@ -468,7 +474,6 @@ function addTagsToImages()
     $imageId = $returnedImageId['imageid'];
     
 //insert image tags into the database
-//try to get into model
     $insertTagSql = "INSERT INTO tags 
     (tag, imageId) 
     VALUES 

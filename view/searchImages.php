@@ -20,7 +20,7 @@ $searchResults = performSearch();
 <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <title>Images</title>
+    <title>Image Search</title>
     <link rel = "stylesheet" type = "text/css" href = "lightbox.min.css">
     <script type = "text/javascript" src="lightbox-plus-jquery.min.js"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js" charset="utf-8"></script>
