@@ -204,7 +204,7 @@ function displayExifOnUploadPage()
   $imageLatitude = $_SESSION['GPSLatitude'];
   $imageLongitude = $_SESSION['GPSLongitude'];
   echo "<div class='search-text'>";  
-  if(strlen($cameraMake) > 0 || strlen($cameraModel) > 0 || strlen($shutterSpeed) > 0 || strlen($aperture) > 0 || strlen($iso) > 0 || strlen($resolution) > 0)
+  if(strlen($cameraMake) > 0 || strlen($cameraModel) > 0 || strlen($shutterSpeed) > 0 || strlen($aperture) > 0 || strlen($iso) > 0 || strlen($resolution) > 0 || strlen($imageYear) > 0 || strlen($imageLatitude) > 1 || strlen($imageLongitude) > 1)
   {
     echo "The following exif was extracted from the selected image: ";
     echo "<br>";
@@ -244,12 +244,12 @@ function displayExifOnUploadPage()
     echo "Image Year from Exif: ".$imageYear;
     echo "<br>";
   }
-  if(strlen($imageLatitude) > 0)
+  if(strlen($imageLatitude) > 1)
   {
     echo "Image Latitude Exif: ".$imageLatitude;
     echo "<br>";
   }
-  if(strlen($imageLongitude) > 0)
+  if(strlen($imageLongitude) > 1)
   {
     echo "Image Longitude Exif: ".$imageLongitude;
     echo "<br>";
@@ -326,12 +326,6 @@ function readExifFromUploadedImages($selectedFile)
   $date = $exif_data['DateTime'];
   $dateExploded = explode(':', $date);
   $yearOfImage = $dateExploded[0];
-
-  //get the GPS Coordinates
-  //$exifLatitude = $exif_data['GPSLatitude'];
-  // $latitudeExploded = explode(' ', $exifLatitude);
-  // $cleanLatitude = preg_replace("/[^a-zA-Z0-9,]+/", "", $latitudeExploded);
-
     
   //make the exif values available for db insertion
   $_SESSION['Make'] = $exif_data['Make'];
@@ -341,7 +335,8 @@ function readExifFromUploadedImages($selectedFile)
   $_SESSION['ISOSpeedRatings'] = $exif_data['ISOSpeedRatings'];
   $_SESSION['XResolution'] = $actualResolution;
   $_SESSION['ExifYear'] = $yearOfImage;
-  //$_SESSION['GPSLatitude'] = $exif_data['GPSLatitude'][1];
+  
+  //get the GPS data and convert from DMS to decimal
   ConvertLatDMStoDEC();
   ConvertLngDMStoDEC();
 }
