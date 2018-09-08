@@ -144,10 +144,15 @@ function tagImage()
 
 function displayOnImageSelection()
 {
+  //get the exifdata
+  $fDestination = $_SESSION['fileDestination'];
+  readExifFromUploadedImages($fDestination);
+
   $year = $_POST['year']; 
   $minimumYear = '1826';
-  $currentYear = date('Y');
-  $fDestination = $_SESSION['fileDestination'];
+  $currentYear = date('Y');  
+  $yearFromExif = $_SESSION['ExifYear'];
+
   echo "<div class='uploadMap'>";  
   echo "<h1 name='selectedImage'>Selected Image</h1>";
   
@@ -155,11 +160,25 @@ function displayOnImageSelection()
   echo "<img src={$_SESSION['thumbDestination']} class='selectedImage'>";
   echo "<form action='uploadImages.php' method='post'>";
   
-  //display the year field  
-  //echo "Year: <input type='text' required placeholder = 'Enter year value here *'' id='year' name='year'><br>";
-  echo "<div class='search-text'>";  
-  echo "Image Year: <input type='number' min='$minimumYear' max='$currentYear' required placeholder = 'Enter year value here *'' id='year' name='year'><br>";
-  echo "Click the map below to select the location the image was taken:";
+  //display the year field
+  if(strlen($yearFromExif) > 0)
+  {
+    echo "<div class='search-text'>";
+    echo "The year value ".$yearFromExif." was found in the image's metadata.  It hase been entered into the year field below";
+    echo "<br>";
+    echo "Please enter the correct value if you don't want to use the value from the metadata";
+    echo "<br>";
+    echo "<br>";
+    echo "Image Year: <input type='number' min='$minimumYear' max='$currentYear' required placeholder = 'Enter year value here *'' id='year' name='year' value='$yearFromExif'><br>";
+    echo "Click the map below to select the location the image was taken:";
+  }
+  else
+  {
+    echo "<div class='search-text'>";  
+    echo "Image Year: <input type='number' min='$minimumYear' max='$currentYear' required placeholder = 'Enter year value here *'' id='year' name='year'><br>";
+    echo "Click the map below to select the location the image was taken:";
+  }
+  
   
   //display the map and its search box
   echo '<input id="pac-input" class="controls" type="text" placeholder="Search Box">
@@ -168,15 +187,22 @@ function displayOnImageSelection()
   
   echo '<script src="../view/js/uploadMap.js"></script>';
   echo "</div>";
-  //display exif if extracted
-  readExifFromUploadedImages($fDestination);
   
+  //display exif if extracted
+  displayExifOnUploadPage();
+}
+
+function displayExifOnUploadPage()
+{
   $cameraMake = $_SESSION['Make'];
   $cameraModel = $_SESSION['Model'];
   $shutterSpeed = $_SESSION['ExposureTime'];
   $aperture = $_SESSION['ApertureFNumber'];
   $iso = $_SESSION['ISOSpeedRatings'];
   $resolution = $_SESSION['XResolution'];
+  $imageYear = $_SESSION['ExifYear'];
+  $imageLatitude = $_SESSION['GPSLatitude'];
+  $imageLongitude = $_SESSION['GPSLongitude'];
   echo "<div class='search-text'>";  
   if(strlen($cameraMake) > 0 || strlen($cameraModel) > 0 || strlen($shutterSpeed) > 0 || strlen($aperture) > 0 || strlen($iso) > 0 || strlen($resolution) > 0)
   {
@@ -211,6 +237,21 @@ function displayOnImageSelection()
   if(strlen($resolution) > 0)
   {
     echo "Resolution: ".$resolution;
+    echo "<br>";
+  }
+  if(strlen($imageYear) > 0)
+  {
+    echo "Image Year from Exif: ".$imageYear;
+    echo "<br>";
+  }
+  if(strlen($imageLatitude) > 0)
+  {
+    echo "Image Latitude Exif: ".$imageLatitude;
+    echo "<br>";
+  }
+  if(strlen($imageLongitude) > 0)
+  {
+    echo "Image Longitude Exif: ".$imageLongitude;
     echo "<br>";
   }
   echo "</div>";
@@ -280,6 +321,17 @@ function readExifFromUploadedImages($selectedFile)
   {
     $actualResolution = $resolution;
   }
+
+  //get the year of the photo from the exif
+  $date = $exif_data['DateTime'];
+  $dateExploded = explode(':', $date);
+  $yearOfImage = $dateExploded[0];
+
+  //get the GPS Coordinates
+  //$exifLatitude = $exif_data['GPSLatitude'];
+  // $latitudeExploded = explode(' ', $exifLatitude);
+  // $cleanLatitude = preg_replace("/[^a-zA-Z0-9,]+/", "", $latitudeExploded);
+
     
   //make the exif values available for db insertion
   $_SESSION['Make'] = $exif_data['Make'];
@@ -288,6 +340,54 @@ function readExifFromUploadedImages($selectedFile)
   $_SESSION['ApertureFNumber'] = $exif_data['COMPUTED']['ApertureFNumber'];
   $_SESSION['ISOSpeedRatings'] = $exif_data['ISOSpeedRatings'];
   $_SESSION['XResolution'] = $actualResolution;
+  $_SESSION['ExifYear'] = $yearOfImage;
+  //$_SESSION['GPSLatitude'] = $exif_data['GPSLatitude'][1];
+  ConvertLatDMStoDEC();
+  ConvertLngDMStoDEC();
+}
+
+function ConvertLatDMStoDEC()
+{
+  //get the exifdata
+  $fDestination = $_SESSION['fileDestination'];
+  $exif_data = exif_read_data($fDestination);
+
+  $rawDeg = $exif_data['GPSLatitude'][0];
+  $rawMin = $exif_data['GPSLatitude'][1];
+  $rawSec = $exif_data['GPSLatitude'][2];
+
+  $degExploded = explode('/', $rawDeg);
+  $minExploded = explode('/', $rawMin);
+  $secExploded = explode('/', $rawDeg);
+
+  $deg = $degExploded[0];
+  $min = $minExploded[0];
+  $sec = $secExploded[0];
+
+  $exifLatitude = $deg + ($min / 60) + ($sec / 3600);
+  $_SESSION['GPSLatitude'] = $exifLatitude;
+}
+
+function ConvertLngDMStoDEC()
+{
+  //get the exifdata
+  $fDestination = $_SESSION['fileDestination'];
+  $exif_data = exif_read_data($fDestination);
+
+  $rawDeg = $exif_data['GPSLongitude'][0];
+  $rawMin = $exif_data['GPSLongitude'][1];
+  $rawSec = $exif_data['GPSLongitude'][2];
+
+  $degExploded = explode('/', $rawDeg);
+  $minExploded = explode('/', $rawMin);
+  $secExploded = explode('/', $rawDeg);
+
+  $deg = $degExploded[0];
+  $min = $minExploded[0];
+  $sec = $secExploded[0];
+
+  $exifLongitude = $deg + ($min / 60) + ($sec / 3600);
+  $_SESSION['GPSLongitude'] = $exifLongitude;
 }
 
 function displayTags($fDestination)
