@@ -391,7 +391,7 @@ function ConvertLatDMStoDEC()
     //get the Longitude Reference
     $exifLongitudeRef = $exif_data['GPSLatitudeRef'];
     
-    //Longitude Reference determines the convertion
+    //Longitude Reference determines the conversion
     if($exifLongitudeRef != 'S')
     {
       $exifLatitude = $deg+((($min*60)+($sec))/3600);
@@ -431,7 +431,7 @@ function ConvertLngDMStoDEC()
     //get the Longitude Reference
     $exifLongitudeRef = $exif_data['GPSLongitudeRef'];
     
-    //Longitude Reference determines the convertion
+    //Longitude Reference determines the conversion
     if($exifLongitudeRef != 'W')
     {
       $exifLongitude = $deg+((($min*60)+($sec))/3600);
