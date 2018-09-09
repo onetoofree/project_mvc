@@ -179,6 +179,8 @@ function displayOnImageSelection()
     echo "Click the map below to select the location the image was taken:";
   }
   
+  //if the exif contains GPS coordinates, use the values
+  useExifCoordinates();
   
   //display the map and its search box
   echo '<input id="pac-input" class="controls" type="text" placeholder="Search Box">
@@ -190,6 +192,26 @@ function displayOnImageSelection()
   
   //display exif if extracted
   displayExifOnUploadPage();
+}
+
+function useExifCoordinates()
+{
+  if(strlen($_SESSION['GPSLatitude'] > 0))
+  {
+    $exifCoordinates =  $_SESSION['GPSLatitude'].",".$_SESSION['GPSLongitude'];
+    $exifLat = $_SESSION['GPSLatitude'];
+    $exifLong = $_SESSION['GPSLongitude'];
+
+    $_SESSION['lat'] = $exifLat;
+    $_SESSION['long'] = $exifLong;
+    
+    echo "<br>";
+    echo "Alternatively, use the location ".$exifCoordinates." found in the selected image's metadata";
+    echo "<br>";
+    echo "It has already been set so once the year value is set, you can submit for upload";
+
+  }
+
 }
 
 function displayExifOnUploadPage()
@@ -254,6 +276,7 @@ function displayExifOnUploadPage()
     echo "Image Longitude Exif: ".$imageLongitude;
     echo "<br>";
   }
+
   echo "</div>";
   echo "<button type='submit' class='button button-block' name='uploadImage' />Upload Image and Details</button>";
   echo "</div>";
@@ -346,21 +369,39 @@ function ConvertLatDMStoDEC()
   //get the exifdata
   $fDestination = $_SESSION['fileDestination'];
   $exif_data = exif_read_data($fDestination);
+  
+  //reset the coordinate
+  $_SESSION['GPSLatitude'] = "";
+  
+  //convert the coordinate from dms to decimal
+  if($exif_data['GPSLatitude'][0])
+  {
+    $rawDeg = $exif_data['GPSLatitude'][0];
+    $rawMin = $exif_data['GPSLatitude'][1];
+    $rawSec = $exif_data['GPSLatitude'][2];
 
-  $rawDeg = $exif_data['GPSLatitude'][0];
-  $rawMin = $exif_data['GPSLatitude'][1];
-  $rawSec = $exif_data['GPSLatitude'][2];
+    $degExploded = explode('/', $rawDeg);
+    $minExploded = explode('/', $rawMin);
+    $secExploded = explode('/', $rawSec);
 
-  $degExploded = explode('/', $rawDeg);
-  $minExploded = explode('/', $rawMin);
-  $secExploded = explode('/', $rawDeg);
-
-  $deg = $degExploded[0];
-  $min = $minExploded[0];
-  $sec = $secExploded[0];
-
-  $exifLatitude = $deg + ($min / 60) + ($sec / 3600);
-  $_SESSION['GPSLatitude'] = $exifLatitude;
+    $deg = $degExploded[0];
+    $min = $minExploded[0];
+    $sec = $secExploded[0]/$secExploded[1];
+    
+    //get the Longitude Reference
+    $exifLongitudeRef = $exif_data['GPSLatitudeRef'];
+    
+    //Longitude Reference determines the convertion
+    if($exifLongitudeRef != 'S')
+    {
+      $exifLatitude = $deg+((($min*60)+($sec))/3600);
+    }
+    else
+    {
+      $exifLatitude = $deg+((($min*60)+($sec))/3600)*-1;
+    }
+    $_SESSION['GPSLatitude'] = $exifLatitude;
+  }
 }
 
 function ConvertLngDMStoDEC()
@@ -368,21 +409,39 @@ function ConvertLngDMStoDEC()
   //get the exifdata
   $fDestination = $_SESSION['fileDestination'];
   $exif_data = exif_read_data($fDestination);
+  
+  //reset the coordinate
+  $_SESSION['GPSLongitude'] = "";
+  
+  //convert the coordinate from dms to decimal
+  if($exif_data['GPSLongitude'][0])
+  {
+    $rawDeg = $exif_data['GPSLongitude'][0];
+    $rawMin = $exif_data['GPSLongitude'][1];
+    $rawSec = $exif_data['GPSLongitude'][2];
 
-  $rawDeg = $exif_data['GPSLongitude'][0];
-  $rawMin = $exif_data['GPSLongitude'][1];
-  $rawSec = $exif_data['GPSLongitude'][2];
+    $degExploded = explode('/', $rawDeg);
+    $minExploded = explode('/', $rawMin);
+    $secExploded = explode('/', $rawSec);
 
-  $degExploded = explode('/', $rawDeg);
-  $minExploded = explode('/', $rawMin);
-  $secExploded = explode('/', $rawDeg);
+    $deg = $degExploded[0];
+    $min = $minExploded[0];
+    $sec = $secExploded[0]/$secExploded[1];
 
-  $deg = $degExploded[0];
-  $min = $minExploded[0];
-  $sec = $secExploded[0];
-
-  $exifLongitude = $deg + ($min / 60) + ($sec / 3600);
-  $_SESSION['GPSLongitude'] = $exifLongitude;
+    //get the Longitude Reference
+    $exifLongitudeRef = $exif_data['GPSLongitudeRef'];
+    
+    //Longitude Reference determines the convertion
+    if($exifLongitudeRef != 'W')
+    {
+      $exifLongitude = $deg+((($min*60)+($sec))/3600);
+    }
+    else
+    {
+      $exifLongitude = $deg+((($min*60)+($sec))/3600)*-1;
+    }    
+    $_SESSION['GPSLongitude'] = $exifLongitude;
+  }
 }
 
 function displayTags($fDestination)

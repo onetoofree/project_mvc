@@ -27,9 +27,7 @@ class thumbnailTest extends TestCase
     {
         $imageFile = '/Library/WebServer/Documents/uploads/Hall.jpg';
         $exif = readExifFromUploadedImages($imageFile);
-        // echo 'Makeeee';
-        // echo $_SESSION['Make'];
-        // echo 'Makeeeer';
+
         $this->assertTrue($_SESSION['Make'] == 'NIKON CORPORATION');
         $this->assertTrue($_SESSION['Model'] == 'NIKON D300S');
         $this->assertTrue($_SESSION['ExposureTime'] == '1/250');
