@@ -1,5 +1,4 @@
 <?php
-/* Displays user information and some useful messages */
 session_start();
 
 // Check if user is logged in using the session variable
@@ -8,7 +7,7 @@ if ( $_SESSION['logged_in'] != 1 ) {
   header("location: error.php");    
 }
 else {
-    // Makes it easier to read
+    
     $email = $_SESSION['email'];
     $username = $_SESSION['username'];
     $active = $_SESSION['active'];
@@ -26,17 +25,9 @@ else {
   <div class="form">
 
           <h1 name="welcomeMessage">Welcome</h1>
-          
-          <p>
-          
-          </p>
-          
-          
-          
           <h2 name="userGreeting"><?php echo $username; ?></h2>
           <p name="emailGreeting"><?= $email ?></p>
           
-          <!-- <a href="upload.php"><button class="button button-block" name="upload"/>Upload</button></a> -->
           <a href="uploadImages.php"><button class="button button-block" name="upload"/>Upload</button></a>
           <a href="searchImages.php"><button class="button button-block" name="search"/>Search</button></a>
           <a href="logout.php"><button class="button button-block" name="logout"/>Log Out</button></a>

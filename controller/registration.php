@@ -2,11 +2,6 @@
 ob_start();
 require '../model/registrationAndLoginQueries.php';
 
-
-// Set session variables to be used on profile.php page
-$_SESSION['email'] = $_POST['email'];
-$_SESSION['username'] = $_POST['username'];
-
 // Escape all $_POST variables to protect against SQL injections
 $username = $dbc->escape_string($_POST['username']);
 $email = $dbc->escape_string($_POST['email']);

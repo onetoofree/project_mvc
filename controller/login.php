@@ -2,11 +2,7 @@
 ob_start();
 /* User login process, checks if user exists and password is correct */
 require '../model/registrationAndLoginQueries.php';
-// Set session variables to be used on profile.php page
-//do I need this?...below session stuff...
-$_SESSION['email'] = $_POST['email'];
-$_SESSION['username'] = $_POST['username'];
-$_SESSION['password'] = $_POST['password'];
+
 
 // Escape username to protect against SQL injections
 $username = $dbc->escape_string($_POST['username']);
