@@ -164,10 +164,12 @@ function displayOnImageSelection()
   if(strlen($yearFromExif) > 0)
   {
     echo "<div class='search-text'>";
+    echo "<div name='yearValueFoundMessage'>";
     echo "The year value ".$yearFromExif." was found in the image's metadata.  It hase been entered into the year field below";
     echo "<br>";
     echo "Please enter the correct value if you don't want to use the value from the metadata";
     echo "<br>";
+    echo "</div>";
     echo "<br>";
     echo "Image Year: <input type='number' min='$minimumYear' max='$currentYear' required placeholder = 'Enter year value here *'' id='year' name='year' value='$yearFromExif'><br>";
     echo "Click the map below to select the location the image was taken:";
@@ -206,10 +208,11 @@ function useExifCoordinates()
     $_SESSION['long'] = $exifLong;
     
     echo "<br>";
+    echo "<div name='locationFoundMessage'>";
     echo "Alternatively, use the location ".$exifCoordinates." found in the selected image's metadata";
     echo "<br>";
     echo "It has already been set so once the year value is set, you can submit for upload";
-
+    echo "</div>";
   }
 
 }
