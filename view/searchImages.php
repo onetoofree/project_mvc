@@ -153,21 +153,7 @@ $searchResults = performSearch();
                                 infowindow.setContent(popupImage);
                                 infowindow.open(map, marker);
                             }
-                        })(marker, popupImage, infowindow));
-
-                        google.maps.event.addListener(marker, 'mouseover', (function(marker, popupImage, infowindow){
-                            return function() {
-                                infowindow.setContent(popupImage);
-                                infowindow.open(map, marker);
-                            }
-                        })(marker, popupImage, infowindow));
-
-                        google.maps.event.addListener(marker, 'mouseout', (function(marker, popupImage, infowindow){
-                            return function() {
-                                //infowindow.setContent(popupImage);
-                                infowindow.close();
-                            }
-                        })(marker, popupImage, infowindow));
+                        })(marker, popupImage, infowindow));                        
                     }                    
                 });       
         }

@@ -3,18 +3,69 @@
 function createThumbnail($fileName)
 {
   //create thumbnail from uploaded image - thumbnail is for website/gallery display
-  $im = imagecreatefromjpeg('../uploads/'.$fileName);
-  $ox = imagesx($im);
-  $oy = imagesy($im);
+  $fileExt = explode('.', $fileName);
+  $fileExtension = strtolower(end($fileExt));
+  $_SESSION['fileExten'] = $fileExtension;
+  if($fileExtension == 'jpg' || $fileExtension == 'jpeg')
+  {
+    $im = imagecreatefromjpeg('../uploads/'.$fileName);
+    $ox = imagesx($im);
+    $oy = imagesy($im);
 
-  $nx = 200;
-  $ny = floor($oy * (200/$ox));
+    $nx = 200;
+    $ny = floor($oy * (200/$ox));
 
-  $nm = imagecreatetruecolor($nx, $ny);
+    $nm = imagecreatetruecolor($nx, $ny);
 
-  imagecopyresized($nm, $im, 0,0,0,0,$nx,$ny,$ox,$oy);
+    imagecopyresized($nm, $im, 0,0,0,0,$nx,$ny,$ox,$oy);
 
-  imagejpeg($nm, '../uploads/thumbnails/'.$fileName);
+    imagejpeg($nm, '../uploads/thumbnails/'.$fileName);
+  }
+
+  if($fileExtension == 'png')
+  {
+    $im = imagecreatefrompng('../uploads/'.$fileName);
+    $ox = imagesx($im);
+    $oy = imagesy($im);
+
+    $nx = 200;
+    $ny = floor($oy * (200/$ox));
+
+    $nm = imagecreatetruecolor($nx, $ny);
+
+    imagecopyresized($nm, $im, 0,0,0,0,$nx,$ny,$ox,$oy);
+
+    imagejpeg($nm, '../uploads/thumbnails/'.$fileName);
+  }
+
+  if($fileExtension == 'gif')
+  {
+    $im = imagecreatefromgif('../uploads/'.$fileName);
+    $ox = imagesx($im);
+    $oy = imagesy($im);
+
+    $nx = 200;
+    $ny = floor($oy * (200/$ox));
+
+    $nm = imagecreatetruecolor($nx, $ny);
+
+    imagecopyresized($nm, $im, 0,0,0,0,$nx,$ny,$ox,$oy);
+
+    imagejpeg($nm, '../uploads/thumbnails/'.$fileName);
+  }
+
+  // $im = imagecreatefromjpeg('../uploads/'.$fileName);
+  // $ox = imagesx($im);
+  // $oy = imagesy($im);
+
+  // $nx = 200;
+  // $ny = floor($oy * (200/$ox));
+
+  // $nm = imagecreatetruecolor($nx, $ny);
+
+  // imagecopyresized($nm, $im, 0,0,0,0,$nx,$ny,$ox,$oy);
+
+  // imagejpeg($nm, '../uploads/thumbnails/'.$fileName);
 }
 
 function getTheSelectedImage($data)
@@ -309,60 +360,66 @@ function getVisionTags($selectedFile)
 
 function readExifFromUploadedImages($selectedFile)
 { 
-  //assign image metadata to a variable 
-  $exif_data = exif_read_data($selectedFile);
+  //get the file extension - exif read from jpgs only
+  $fileExten = $_SESSION['fileExten'];
 
-  //get the shutter speed from exif
-  $shutterSpeed = $exif_data['ExposureTime'];
-
-  //get the numerical values from shutter speed
-  $shutterSpeedMultiplier = explode('/', $shutterSpeed);
-  
-  //the shutter speed in the exif for some images is multiplied by 10.
-  //the below checks if that's the case in order to return the correct shutter speed value
-  if ($shutterSpeedMultiplier[0] == 10)
+  if($fileExten == 'jpg'  || $fileExten == 'jpeg')
   {
-    $actualShutterSpeed1 = $shutterSpeedMultiplier[0]/$shutterSpeedMultiplier[0];
-    $actualShutterSpeed2 = $shutterSpeedMultiplier[1]/$shutterSpeedMultiplier[0];
-    $actualShutterSpeed = $actualShutterSpeed1.'/'.$actualShutterSpeed2;
-  }
-  else
-  {
-    $actualShutterSpeed = $exif_data['ExposureTime'];
-  }
+    //assign image metadata to a variable 
+    $exif_data = exif_read_data($selectedFile);
 
-  //get the resolution from exif
-  $resolution = $exif_data['XResolution'];
+    //get the shutter speed from exif
+    $shutterSpeed = $exif_data['ExposureTime'];
 
-  //get the numerical value from resolution
-  $resMultiplier = explode('/', $resolution);
-
-  if($resMultiplier[0] > 0)
-  {
-    $actualResolution = $resMultiplier[0].'dpi';
-  }
-  else
-  {
-    $actualResolution = $resolution;
-  }
-
-  //get the year of the photo from the exif
-  $date = $exif_data['DateTime'];
-  $dateExploded = explode(':', $date);
-  $yearOfImage = $dateExploded[0];
+    //get the numerical values from shutter speed
+    $shutterSpeedMultiplier = explode('/', $shutterSpeed);
     
-  //make the exif values available for db insertion
-  $_SESSION['Make'] = $exif_data['Make'];
-  $_SESSION['Model'] = $exif_data['Model'];
-  $_SESSION['ExposureTime'] = $actualShutterSpeed;
-  $_SESSION['ApertureFNumber'] = $exif_data['COMPUTED']['ApertureFNumber'];
-  $_SESSION['ISOSpeedRatings'] = $exif_data['ISOSpeedRatings'];
-  $_SESSION['XResolution'] = $actualResolution;
-  $_SESSION['ExifYear'] = $yearOfImage;
-  
-  //get the GPS data and convert from DMS to decimal
-  ConvertLatDMStoDEC();
-  ConvertLngDMStoDEC();
+    //the shutter speed in the exif for some images is multiplied by 10.
+    //the below checks if that's the case in order to return the correct shutter speed value
+    if ($shutterSpeedMultiplier[0] == 10)
+    {
+      $actualShutterSpeed1 = $shutterSpeedMultiplier[0]/$shutterSpeedMultiplier[0];
+      $actualShutterSpeed2 = $shutterSpeedMultiplier[1]/$shutterSpeedMultiplier[0];
+      $actualShutterSpeed = $actualShutterSpeed1.'/'.$actualShutterSpeed2;
+    }
+    else
+    {
+      $actualShutterSpeed = $exif_data['ExposureTime'];
+    }
+
+    //get the resolution from exif
+    $resolution = $exif_data['XResolution'];
+
+    //get the numerical value from resolution
+    $resMultiplier = explode('/', $resolution);
+
+    if($resMultiplier[0] > 0)
+    {
+      $actualResolution = $resMultiplier[0].'dpi';
+    }
+    else
+    {
+      $actualResolution = $resolution;
+    }
+
+    //get the year of the photo from the exif
+    $date = $exif_data['DateTime'];
+    $dateExploded = explode(':', $date);
+    $yearOfImage = $dateExploded[0];
+      
+    //make the exif values available for db insertion
+    $_SESSION['Make'] = $exif_data['Make'];
+    $_SESSION['Model'] = $exif_data['Model'];
+    $_SESSION['ExposureTime'] = $actualShutterSpeed;
+    $_SESSION['ApertureFNumber'] = $exif_data['COMPUTED']['ApertureFNumber'];
+    $_SESSION['ISOSpeedRatings'] = $exif_data['ISOSpeedRatings'];
+    $_SESSION['XResolution'] = $actualResolution;
+    $_SESSION['ExifYear'] = $yearOfImage;
+    
+    //get the GPS data and convert from DMS to decimal
+    ConvertLatDMStoDEC();
+    ConvertLngDMStoDEC();
+  }
 }
 
 function ConvertLatDMStoDEC()
