@@ -116,6 +116,7 @@ $isoSet = $_POST['iso'];
 $resolutionSet = $_POST['resolution'];
     if(strlen($latitudeSet) > 0 || strlen($longitudeSet) > 0 || strlen($startYearSet) > 0 || strlen($endYearSet) > 0 || strlen($radiusSet) > 0 || strlen($tagsSet) > 0 || strlen($cameraMakeSet) > 0 || strlen($cameraModelSet) > 0 || strlen($shutterSpeedSet) > 0 || strlen($apertureSet) > 0 || strlen($isoSet) > 0 || strlen($resolutionSet) > 0)
         {
+            echo "<div name='filterSet'>";
             echo "<h2 name='filtersSet'>The following filters are set: </h2>";
             if(strlen($latitudeSet) > 0 && (strlen($longitudeSet) > 0))
             {
@@ -161,6 +162,7 @@ $resolutionSet = $_POST['resolution'];
             {
                 echo "<h3>resolution: ".$resolutionSet."</h3>";            
             }
+            echo "</div>";
         }
     else
         {

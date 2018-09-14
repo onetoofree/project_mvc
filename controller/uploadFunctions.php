@@ -36,8 +36,6 @@ function getTheSelectedImage($data)
 
     $fileDestination = '../uploads/'.$fileName;
     $thumbDestination = '../uploads/thumbnails/'.$fileName;
-    
-    //move_uploaded_file($fileTmpName, $fileDestination);
 
     if (move_uploaded_file($fileTmpName, $fileDestination))
     {
@@ -228,7 +226,7 @@ function displayExifOnUploadPage()
   $imageYear = $_SESSION['ExifYear'];
   $imageLatitude = $_SESSION['GPSLatitude'];
   $imageLongitude = $_SESSION['GPSLongitude'];
-  echo "<div class='search-text'>";  
+  echo "<div class='search-text' name='foundExifDisplayed'>";  
   if(strlen($cameraMake) > 0 || strlen($cameraModel) > 0 || strlen($shutterSpeed) > 0 || strlen($aperture) > 0 || strlen($iso) > 0 || strlen($resolution) > 0 || strlen($imageYear) > 0 || strlen($imageLatitude) > 1 || strlen($imageLongitude) > 1)
   {
     echo "The following exif was extracted from the selected image: ";
