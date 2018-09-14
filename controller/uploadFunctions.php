@@ -53,19 +53,6 @@ function createThumbnail($fileName)
 
     imagejpeg($nm, '../uploads/thumbnails/'.$fileName);
   }
-
-  // $im = imagecreatefromjpeg('../uploads/'.$fileName);
-  // $ox = imagesx($im);
-  // $oy = imagesy($im);
-
-  // $nx = 200;
-  // $ny = floor($oy * (200/$ox));
-
-  // $nm = imagecreatetruecolor($nx, $ny);
-
-  // imagecopyresized($nm, $im, 0,0,0,0,$nx,$ny,$ox,$oy);
-
-  // imagejpeg($nm, '../uploads/thumbnails/'.$fileName);
 }
 
 function getTheSelectedImage($data)
